@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piano Personale Ritorno Venoso V2</title>
+    <style>
+        :root {
+            --primary-color: #005f73;
+            --secondary-color: #0a9396;
+            --accent-color: #94d2bd;
+            --light-bg: #e9d8a6; /* Un po' più tenue */
+            --content-bg: #fdfbf5; /* Sfondo contenuti più chiaro */
+            --reference-bg: #f0f3f5; /* Sfondo per la reference diet */
+            --text-color: #212529;
+            --light-text: #f8f9fa;
+            --border-color: #dee2e6;
+            --checked-color: #2a9d8f;
+            --error-color: #d9534f;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            margin: 0;
+            padding: 20px;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px; /* Aumentato per possibile layout a 2 colonne */
+            margin: 20px auto;
+            background-color: var(--content-bg);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .main-layout {
+            display: flex;
+            flex-wrap: wrap; /* Cade in verticale su schermi piccoli */
+            gap: 30px;
+        }
+
+        .tracking-section {
+            flex: 2; /* Occupa più spazio */
+            min-width: 300px; /* Larghezza minima */
+        }
+
+        .reference-section {
+            flex: 1; /* Occupa meno spazio */
+            min-width: 280px;
+            background-color: var(--reference-bg);
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid var(--border-color);
+        }
+
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        h1 { text-align: center; margin-bottom: 30px;}
+        h2 {
+            margin-top: 25px;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 8px;
+            font-size: 1.4em;
+        }
+         h3 {
+             color: var(--secondary-color);
+             font-size: 1.2em;
+             margin-bottom: 10px;
+         }
+         .reference-section h2 {
+             font-size: 1.3em;
+             margin-top: 0;
+         }
+         .reference-section h3 {
+             font-size: 1.1em;
+             margin-top: 15px;
+         }
+
+
+        .day-selector {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .day-btn {
+            padding: 10px 15px;
+            background-color: var(--secondary-color);
+            color: var(--light-text);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .day-btn:hover, .day-btn.active {
+            background-color: var(--primary-color);
+        }
+
+        .meal-section {
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #fff;
+            transition: background-color 0.3s ease;
+        }
+
+        .meal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .meal-header h4 { /* Usiamo H4 per i titoli dei pasti */
+            margin: 0;
+            color: var(--secondary-color);
+            font-size: 1.1em;
+        }
+
+        .meal-check {
+            transform: scale(1.3);
+            margin-left: 10px;
+            cursor: pointer;
+            accent-color: var(--checked-color);
+        }
+
+        .meal-content textarea {
+            width: calc(100% - 22px); /* Account for padding */
+            min-height: 60px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 10px;
+            font-family: inherit;
+            font-size: 0.95em;
+            resize: vertical;
+            margin-top: 5px;
+        }
+
+        .meal-content textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(10, 147, 150, 0.2);
+        }
+
+         /* Style for checked state */
+        .meal-section.checked {
+            background-color: #e8f5e9cc; /* Light green background, slightly transparent */
+            border-left: 5px solid var(--checked-color);
+        }
+        .meal-section.checked .meal-header h4 {
+            text-decoration: line-through;
+            color: #6c757d; /* Grigio più scuro */
+        }
+
+
+        .notes-section textarea, .cost-section input {
+            width: calc(100% - 22px);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 10px;
+            font-family: inherit;
+            font-size: 0.95em;
+            margin-top: 5px;
+        }
+         .notes-section textarea {
+             min-height: 80px;
+             resize: vertical;
+         }
+
+        .supplements-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .supplements-section li {
+            margin-bottom: 12px; /* Aumentato spazio */
+            display: flex;
+            align-items: flex-start; /* Allinea all'inizio per dosaggi lunghi */
+            flex-wrap: wrap; /* Permette al link di andare a capo */
+        }
+         .supplements-section .sup-info {
+             display: flex;
+             align-items: center;
+             flex-grow: 1; /* Occupa spazio disponibile */
+             margin-right: 10px; /* Spazio prima del link */
+         }
+         .supplements-section input[type="checkbox"] {
+             margin-right: 10px;
+             transform: scale(1.1);
+             cursor: pointer;
+             accent-color: var(--checked-color);
+             margin-top: 2px; /* Allineamento verticale migliore */
+         }
+         .supplements-section label {
+             font-weight: bold;
+             margin-right: 8px;
+         }
+         .supplement-dosage {
+             font-size: 0.85em;
+             color: #555;
+             font-style: italic;
+             margin-top: 1px; /* Allineamento */
+         }
+        .supplement-link {
+            font-size: 0.9em;
+            color: var(--primary-color);
+            text-decoration: none;
+            padding: 3px 8px;
+            border: 1px solid var(--accent-color);
+            border-radius: 3px;
+            transition: background-color 0.3s, color 0.3s;
+            white-space: nowrap; /* Evita che 'Link' vada a capo */
+            margin-top: 3px; /* Spazio se va a capo */
+        }
+        .supplement-link:hover {
+             background-color: var(--accent-color);
+             color: var(--primary-color);
+        }
+
+        .cost-section label {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        .cost-section input {
+             width: 100px;
+             margin-left: 5px;
+        }
+
+        .save-status {
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+            color: #555;
+            min-height: 1.5em; /* Aumentato per messaggi più lunghi */
+            font-weight: bold;
+        }
+        .save-status.error {
+            color: var(--error-color);
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .action-button {
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        .action-button:hover {
+             background-color: var(--secondary-color);
+        }
+        .action-button.manual-save {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+         .action-button.manual-save:hover {
+            background-color: #7ab8a5; /* Scurisce leggermente l'accento */
+         }
+
+        /* Stili per la sezione Reference Diet */
+        .reference-diet-details {
+             margin-top: 15px;
+        }
+        .reference-diet-details summary {
+            font-weight: bold;
+            cursor: pointer;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .reference-day {
+            margin-bottom: 15px;
+        }
+        .reference-day h4 { /* Titolo giorno nella reference */
+             color: var(--primary-color);
+             margin-bottom: 8px;
+             font-size: 1em;
+             border-bottom: 1px solid var(--accent-color);
+             padding-bottom: 3px;
+        }
+        .reference-meal {
+            margin-bottom: 8px;
+            padding-left: 10px;
+        }
+        .reference-meal strong { /* Nome pasto */
+            color: var(--secondary-color);
+            font-size: 0.95em;
+        }
+        .reference-meal p { /* Descrizione pasto */
+            margin: 2px 0 4px 0;
+            font-size: 0.9em;
+            white-space: pre-wrap; /* Mantiene gli a capo del testo originale */
+        }
+        .substitute-text {
+            font-style: italic;
+            color: #444;
+            font-size: 0.85em;
+            margin-left: 10px;
+            white-space: pre-wrap;
+        }
+        .substitute-text::before {
+            content: "Sostituto: ";
+            font-weight: bold;
+        }
+
+        /* Simple responsiveness */
+         @media (max-width: 900px) { /* Breakpoint per layout */
+             .main-layout {
+                 flex-direction: column;
+             }
+             .reference-section {
+                 margin-top: 20px;
+             }
+         }
+         @media (max-width: 600px) {
+            body { padding: 10px; }
+            .container { padding: 15px; }
+            h1 { font-size: 1.5em; }
+            h2 { font-size: 1.2em; }
+            .day-btn { padding: 8px 10px; font-size: 0.9em;}
+            .meal-header h4 { font-size: 1.05em; }
+            .action-buttons { flex-direction: column; align-items: center; }
+         }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Piano Personale Ritorno Venoso</h1>
+
+        <div class="main-layout">
+
+            <!-- Sezione Tracking Interattivo -->
+            <div class="tracking-section">
+                <div class="day-selector" id="daySelector">
+                    <!-- Buttons will be generated by JS -->
+                </div>
+
+                <div id="dailyPlan">
+                    <h2 id="currentDayTitle">Piano per Lunedì</h2>
+
+                    <!-- Struttura Pasti (rimane simile) -->
+                    <div class="meal-section" id="colazioneSection">
+                        <div class="meal-header">
+                            <h4><i class="fas fa-mug-hot"></i> Colazione</h4>
+                            <input type="checkbox" class="meal-check" id="colazioneCheck" data-meal="colazione">
+                        </div>
+                        <div class="meal-content">
+                            <textarea id="colazioneText" data-meal="colazione" placeholder="Descrivi la colazione consumata/pianificata..."></textarea>
+                        </div>
+                    </div>
+                     <div class="meal-section" id="spuntinoMattinaSection">
+                        <div class="meal-header">
+                             <h4><i class="fas fa-apple-alt"></i> Spuntino Mattina</h4>
+                             <input type="checkbox" class="meal-check" id="spuntinoMattinaCheck" data-meal="spuntinoMattina">
+                        </div>
+                         <div class="meal-content">
+                             <textarea id="spuntinoMattinaText" data-meal="spuntinoMattina" placeholder="Descrivi lo spuntino..."></textarea>
+                         </div>
+                    </div>
+                     <div class="meal-section" id="pranzoSection">
+                         <div class="meal-header">
+                             <h4><i class="fas fa-utensils"></i> Pranzo</h4>
+                             <input type="checkbox" class="meal-check" id="pranzoCheck" data-meal="pranzo">
+                        </div>
+                         <div class="meal-content">
+                             <textarea id="pranzoText" data-meal="pranzo" placeholder="Descrivi il pranzo..."></textarea>
+                         </div>
+                    </div>
+                     <div class="meal-section" id="spuntinoPomeriggioSection">
+                         <div class="meal-header">
+                             <h4><i class="fas fa-cookie-bite"></i> Spuntino Pomeriggio</h4>
+                             <input type="checkbox" class="meal-check" id="spuntinoPomeriggioCheck" data-meal="spuntinoPomeriggio">
+                         </div>
+                         <div class="meal-content">
+                             <textarea id="spuntinoPomeriggioText" data-meal="spuntinoPomeriggio" placeholder="Descrivi lo spuntino..."></textarea>
+                         </div>
+                     </div>
+                    <div class="meal-section" id="cenaSection">
+                         <div class="meal-header">
+                             <h4><i class="fas fa-moon"></i> Cena</h4>
+                             <input type="checkbox" class="meal-check" id="cenaCheck" data-meal="cena">
+                         </div>
+                         <div class="meal-content">
+                            <textarea id="cenaText" data-meal="cena" placeholder="Descrivi la cena..."></textarea>
+                         </div>
+                    </div>
+
+
+                    <!-- Sezione Note -->
+                    <div class="notes-section">
+                        <h2>Note del Giorno</h2>
+                        <textarea id="dailyNotes" placeholder="Sintomi, allenamento, sensazioni, ecc..."></textarea>
+                    </div>
+
+                     <!-- Sezione Integratori -->
+                     <div class="supplements-section">
+                        <h2>Monitoraggio Integratori Giornalieri</h2>
+                        <ul id="supplementList">
+                            <!-- Integratori verranno aggiunti da JS -->
+                        </ul>
+                    </div>
+
+                     <!-- Sezione Costi -->
+                    <div class="cost-section">
+                         <h2>Costo Spesa Settimanale</h2>
+                         <p>Stima iniziale: ~95 €</p>
+                         <label for="weeklyCost">Costo Effettivo Settimana (€):</label>
+                         <input type="number" id="weeklyCost" step="0.01" placeholder="Es: 98.50">
+                    </div>
+
+                    <div class="save-status" id="saveStatus"></div>
+                    
+                    <div class="action-buttons">
+                         <button class="action-button manual-save" id="manualSaveButton">Salva Ora</button>
+                         <button class="action-button" id="exportButton">Esporta Dati (CSV)</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Sezione Dieta di Riferimento (Statica) -->
+            <div class="reference-section">
+                 <h2>Dieta Suggerita (Riferimento)</h2>
+                 <details class="reference-diet-details" open> <!-- 'open' lo mostra di default -->
+                      <summary>Mostra/Nascondi Dettagli Dieta</summary>
+                      <div id="referenceDietContent">
+                           <!-- Contenuto generato da JS -->
+                      </div>
+                 </details>
+            </div>
+
+        </div> <!-- Fine main-layout -->
+    </div> <!-- Fine container -->
+
+    <script>
+        const daysOfWeek = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"];
+        const mealTypes = ["colazione", "spuntinoMattina", "pranzo", "spuntinoPomeriggio", "cena"];
+        const mealNames = { // Nomi più carini per la visualizzazione
+            colazione: "Colazione",
+            spuntinoMattina: "Spuntino Mattina",
+            pranzo: "Pranzo",
+            spuntinoPomeriggio: "Spuntino Pomeriggio",
+            cena: "Cena"
+        };
+
+        // --- DIETA DI RIFERIMENTO ---
+        // Ora include 'substitute' per i sostituti opzionali
+        const defaultWeeklyPlan = {
+            "Lunedì": {
+                colazione: { text: "Yogurt greco 150g\nFrutti di bosco 100g\nFiocchi d'avena 40g\nMandorle 10g", substitute: "Latte p.s. 200ml + 4 fette biscottate integrali + marmellata senza zuccheri" },
+                spuntinoMattina: { text: "1 Mela\nNoci 15g", substitute: "1 Pera + 10 mandorle" },
+                pranzo: { text: "Salmone al vapore 150g\nQuinoa 80g\nSpinaci saltati 200g\nOlio EVO 1 cucchiaio", substitute: "Sgombro al forno 150g + Riso integrale 80g + Broccoli 200g" },
+                spuntinoPomeriggio: { text: "1 Pera\nYogurt magro 125g", substitute: "Fragole 150g + 10g cioccolato fondente >80%" },
+                cena: { text: "Petto di pollo alla griglia 130g\nPatate dolci al forno 150g\nBroccoli al vapore 200g\nOlio EVO 1 cucchiaio", substitute: "Tacchino ai ferri 140g + Insalata mista abbondante + Pane integrale 40g" },
+            },
+             "Martedì": {
+                colazione: { text: "Latte p.s. 200ml\nPane integrale 50g\nRicotta 80g\nMarmellata senza zuccheri 20g", substitute: "Porridge (Avena 40g, latte/acqua 200ml) + frutta fresca" },
+                spuntinoMattina: { text: "Banana 1\nMandorle 15g", substitute: "Kiwi 2" },
+                pranzo: { text: "Zuppa di legumi misti (ceci, fagioli, lenticchie) 300g\nPasta integrale 70g\nOlio EVO 1 cucchiaio", substitute: "Insalata di farro 80g + verdure grigliate + Feta 50g" },
+                spuntinoPomeriggio: { text: "Kiwi 2\nNoci 10g", substitute: "Yogurt greco 150g" },
+                cena: { text: "Sgombro al forno 150g\nInsalata mista (lattuga, rucola, pomodori) 200g\nPane integrale 30g\nOlio EVO 1 cucchiaio", substitute: "Merluzzo al vapore 160g + Cavolfiore 200g + Patate lesse 100g" },
+            },
+            // Aggiungere substitute per gli altri giorni... (ho lasciato gli altri come prima per brevità)
+            "Mercoledì": { colazione: { text: "Porridge d'avena (40g avena, 200ml acqua/latte)\nMirtilli 80g\nSemi di chia 10g", substitute: "" }, spuntinoMattina: { text: "Arancia 1\nNocciole 15g", substitute: "" }, pranzo: { text: "Riso integrale 80g con verdure miste saltate (zucchine, carote, peperoni) 250g\nUovo sodo 1\nOlio EVO 1 cucchiaio", substitute: "" }, spuntinoPomeriggio: { text: "Yogurt greco 150g\nFragole 100g", substitute: "" }, cena: { text: "Tacchino ai ferri 140g\nCavolfiore gratinato 200g\nOlio EVO 1 cucchiaio", substitute: "" } },
+            "Giovedì": { colazione: { text: "Pancakes integrali 2 (farina integrale 50g, 1 uovo, latte)\nSciroppo d'acero 1 cucchiaino\nFrutti rossi 80g", substitute: "" }, spuntinoMattina: { text: "Pompelmo 1\nMandorle 15g", substitute: "" }, pranzo: { text: "Insalata di farro 80g con tonno al naturale 100g, pomodorini, cetrioli, olive nere\nOlio EVO 1 cucchiaio", substitute: "" }, spuntinoPomeriggio: { text: "Mela 1\nBurro di arachidi 15g", substitute: "" }, cena: { text: "Merluzzo al forno 160g con erbe aromatiche\nAsparagi al vapore 200g\nPatate lesse 150g\nOlio EVO 1 cucchiaio", substitute: "" } },
+            "Venerdì": { colazione: { text: "Yogurt greco 150g\nKiwi 1\nGranola senza zuccheri 30g\nSemi di zucca 10g", substitute: "" }, spuntinoMattina: { text: "Pera 1\nNoci 15g", substitute: "" }, pranzo: { text: "Pasta integrale 80g con pesto leggero (basilico, pinoli, aglio, olio evo, poco parmigiano)\nFagiolini al vapore 150g", substitute: "" }, spuntinoPomeriggio: { text: "Frutti di bosco misti 100g\nYogurt magro 125g", substitute: "" }, cena: { text: "Polpette di lenticchie 150g\nPurea di cavolfiore 200g\nInsalata verde mista 100g\nOlio EVO 1 cucchiaio", substitute: "" } },
+            "Sabato": { colazione: { text: "Latte p.s. 200ml\nFette biscottate integrali 4\nCrema di mandorle 20g\n1 Arancia", substitute: "" }, spuntinoMattina: { text: "Banana 1\nNocciole 15g", substitute: "" }, pranzo: { text: "Insalatona mista con: Lattuga, Rucola, Carote julienne, Ceci 100g, Petto di pollo grigliato a striscioline 100g, Semi misti 10g, Aceto balsamico, Olio EVO 1 cucchiaio", substitute: "" }, spuntinoPomeriggio: { text: "Mela cotta con cannella", substitute: "" }, cena: { text: "Orata al cartoccio 180g con pomodorini e olive\nFinocchi gratinati 200g\nPane integrale 30g\nOlio EVO 1 cucchiaio", substitute: "" } },
+            "Domenica": { colazione: { text: "Brunch leggero: Uova strapazzate 2\nPane integrale tostato 40g\nAvocado 50g\nSpremuta d'arancia 150ml", substitute: "" }, spuntinoMattina: { text: "Frutta secca mista 20g", substitute: "" }, pranzo: { text: "Lasagna vegetariana leggera (con verdure e ricotta) porzione media\nInsalata verde", substitute: "" }, spuntinoPomeriggio: { text: "Macedonia di frutta fresca 150g", substitute: "" }, cena: { text: "**Sgarro:** Pizza (preferibilmente Margherita o con verdure)", substitute: "" } }
+        };
+        
+        // --- INTEGRATORI ---
+        // Ora includono 'dosage'
+        const supplements = [
+            { id: "diosmina", name: "Diosmina + Esperidina", dosage: "Es: 1 cpr mattina, 1 cpr sera", link: "https://..." }, // Sostituisci link
+            { id: "centella", name: "Centella Asiatica", dosage: "Es: 1 capsula al giorno", link: "https://..." }, // Sostituisci link
+            { id: "ippocastano", name: "Ippocastano", dosage: "Es: 1 capsula al mattino", link: "https://..." },
+            { id: "viteRossa", name: "Vite Rossa", dosage: "Es: 1 misurino in acqua", link: "https://..." },
+            { id: "magnesio", name: "Magnesio", dosage: "Es: 1 bustina la sera", link: "https://..." },
+            { id: "mirtillo", name: "Mirtillo", dosage: "Es: 1 opercolo al giorno", link: "https://..." }
+        ];
+
+
+        let weeklyData = {}; // Dati INTERATTIVI (modifiche utente, check, note)
+        let currentDay = daysOfWeek[0];
+        let weeklyCost = "";
+        let saveTimeout;
+
+        // --- Elementi DOM ---
+        const daySelector = document.getElementById('daySelector');
+        const currentDayTitle = document.getElementById('currentDayTitle');
+        const dailyNotes = document.getElementById('dailyNotes');
+        const supplementList = document.getElementById('supplementList');
+        const weeklyCostInput = document.getElementById('weeklyCost');
+        const saveStatus = document.getElementById('saveStatus');
+        const exportButton = document.getElementById('exportButton');
+        const manualSaveButton = document.getElementById('manualSaveButton');
+        const referenceDietContent = document.getElementById('referenceDietContent');
+        const dailyPlanContainer = document.getElementById('dailyPlan'); // Contenitore per event delegation
+
+        // --- Funzioni ---
+
+        function initializeApp() {
+            loadData(); // Carica dati utente salvati (o inizializza se non presenti)
+            createDayButtons();
+            populateSupplements(); // Popola lista integratori interattiva
+            displayReferenceDiet(); // Mostra dieta di riferimento statica
+            selectDay(daysOfWeek[new Date().getDay() === 0 ? 6 : new Date().getDay() - 1] || daysOfWeek[0]); // Seleziona giorno corrente
+            addEventListeners();
+            console.log("App V2 Initialized.");
+        }
+
+        function displayReferenceDiet() {
+             referenceDietContent.innerHTML = ''; // Pulisci
+             daysOfWeek.forEach(day => {
+                 const dayDiv = document.createElement('div');
+                 dayDiv.classList.add('reference-day');
+                 
+                 const dayTitle = document.createElement('h4');
+                 dayTitle.textContent = day;
+                 dayDiv.appendChild(dayTitle);
+
+                 const dayPlan = defaultWeeklyPlan[day];
+                 mealTypes.forEach(mealKey => {
+                     const mealData = dayPlan[mealKey];
+                     if (mealData && mealData.text) { // Mostra solo se c'è un testo per il pasto
+                          const mealDiv = document.createElement('div');
+                          mealDiv.classList.add('reference-meal');
+                          
+                          const mealTitle = document.createElement('strong');
+                          mealTitle.textContent = mealNames[mealKey] + ":";
+                          mealDiv.appendChild(mealTitle);
+                          
+                          const mealText = document.createElement('p');
+                          mealText.textContent = mealData.text;
+                          mealDiv.appendChild(mealText);
+
+                          if (mealData.substitute) {
+                              const substituteText = document.createElement('span');
+                              substituteText.classList.add('substitute-text');
+                              substituteText.textContent = mealData.substitute;
+                              mealDiv.appendChild(substituteText);
+                          }
+                          dayDiv.appendChild(mealDiv);
+                     }
+                 });
+                 referenceDietContent.appendChild(dayDiv);
+             });
+        }
+        
+        function populateSupplements() {
+             supplementList.innerHTML = ''; // Pulisci lista
+             supplements.forEach(sup => {
+                 const li = document.createElement('li');
+                 
+                 const supInfoDiv = document.createElement('div');
+                 supInfoDiv.classList.add('sup-info');
+
+                 const checkbox = document.createElement('input');
+                 checkbox.type = 'checkbox';
+                 checkbox.id = `sup-${sup.id}`;
+                 checkbox.dataset.supplementId = sup.id;
+                 // NO event listener qui, lo mettiamo globale con delegation
+                 
+                 const label = document.createElement('label');
+                 label.htmlFor = `sup-${sup.id}`;
+                 label.textContent = sup.name;
+                 
+                 const dosageSpan = document.createElement('span');
+                 dosageSpan.classList.add('supplement-dosage');
+                 dosageSpan.textContent = `(${sup.dosage || 'Dosaggio non specificato'})`; // Mostra dosaggio
+
+                 supInfoDiv.appendChild(checkbox);
+                 supInfoDiv.appendChild(label);
+                 supInfoDiv.appendChild(dosageSpan);
+                 
+                 li.appendChild(supInfoDiv);
+
+                 if (sup.link && sup.link !== 'https://...') {
+                     const link = document.createElement('a');
+                     link.href = sup.link;
+                     link.textContent = 'Link Acquisto';
+                     link.target = '_blank'; 
+                     link.classList.add('supplement-link');
+                     li.appendChild(link);
+                 }
+                 
+                 supplementList.appendChild(li);
+             });
+         }
+
+        function loadData() {
+            let loadedSuccessfully = false;
+            try {
+                const savedData = localStorage.getItem('venousReturnPlan_v2'); // Uso una chiave diversa per V2
+                const savedCost = localStorage.getItem('venousReturnWeeklyCost_v2');
+                
+                if (savedData) {
+                    weeklyData = JSON.parse(savedData);
+                    // **Validazione/Merge Dati Caricati:**
+                    // Assicura che tutti i giorni/pasti esistano nella struttura caricata,
+                    // altrimenti li prende dal default. Mantiene i dati utente se presenti.
+                    daysOfWeek.forEach(day => {
+                        if (!weeklyData[day]) {
+                             weeklyData[day] = {}; // Crea giorno se non esiste
+                             console.warn(`Giorno ${day} non trovato nei dati salvati. Inizializzo.`);
+                        }
+                        // Completa pasti mancanti e aggiunge 'completed' se non presente
+                        mealTypes.forEach(meal => {
+                             if (!weeklyData[day][meal]) {
+                                 // Se il pasto manca del tutto nei dati salvati, NON lo inizializzo qui
+                                 // Lo lascio vuoto, l'utente lo riempirà se serve.
+                                 // Inizializzo solo se esiste ma manca 'completed'.
+                                 if(weeklyData[day][meal] && weeklyData[day][meal].completed === undefined) {
+                                      weeklyData[day][meal].completed = false;
+                                 }
+                             } else if (weeklyData[day][meal].completed === undefined) {
+                                 weeklyData[day][meal].completed = false; // Assicura che 'completed' esista
+                             }
+                             // Inizializzo la proprietà text se manca, ma solo se il pasto esiste
+                             if(weeklyData[day][meal] && weeklyData[day][meal].text === undefined) {
+                                 weeklyData[day][meal].text = '';
+                             }
+                        });
+                         // Inizializza note e supplementi se mancano
+                        if (weeklyData[day].notes === undefined) weeklyData[day].notes = "";
+                        if (weeklyData[day].supplements === undefined) weeklyData[day].supplements = {};
+                        
+                        // Assicura che tutti i supplementi definiti ESISTANO nell'oggetto del giorno
+                        supplements.forEach(sup => {
+                            if (weeklyData[day].supplements[sup.id] === undefined) {
+                                weeklyData[day].supplements[sup.id] = false; // Inizializza a non preso
+                            }
+                        });
+                    });
+                    loadedSuccessfully = true;
+                    console.log("Dati utente caricati da localStorage.");
+
+                } else {
+                    // Nessun dato salvato: Inizializza 'weeklyData' vuoto.
+                    // I campi verranno popolati al primo salvataggio o quando l'utente interagisce.
+                     weeklyData = {};
+                     daysOfWeek.forEach(day => {
+                        weeklyData[day] = { notes: "", supplements: {} };
+                        mealTypes.forEach(meal => {
+                             // Non mettiamo il testo di default qui, l'utente lo inserirà
+                             weeklyData[day][meal] = { text: "", completed: false }; 
+                        });
+                        supplements.forEach(sup => {
+                             weeklyData[day].supplements[sup.id] = false;
+                        });
+                     });
+                    console.log("Nessun dato salvato trovato. Inizializzazione struttura vuota.");
+                }
+
+                 // Carica costo settimanale
+                weeklyCost = savedCost || ""; // Usa stringa vuota se non trovato
+                weeklyCostInput.value = weeklyCost;
+
+            } catch (e) {
+                console.error("Errore durante il caricamento dei dati:", e);
+                saveStatus.textContent = "Errore nel caricamento dei dati! Potrebbero essere corrotti.";
+                saveStatus.classList.add('error');
+                // Reset a struttura vuota in caso di errore di parsing
+                 weeklyData = {};
+                 daysOfWeek.forEach(day => {
+                     weeklyData[day] = { notes: "", supplements: {} };
+                      mealTypes.forEach(meal => {
+                         weeklyData[day][meal] = { text: "", completed: false }; 
+                      });
+                      supplements.forEach(sup => {
+                         weeklyData[day].supplements[sup.id] = false;
+                      });
+                 });
+                weeklyCost = "";
+                weeklyCostInput.value = "";
+                 alert("Attenzione: si è verificato un errore nel caricamento dei tuoi dati salvati. Potrebbero essere stati persi o corrotti. Verrà utilizzato un piano vuoto.");
+            }
+        }
+
+        function saveData(isManual = false) {
+            clearTimeout(saveTimeout); // Annulla eventuali salvataggi automatici in attesa
+            try {
+                // 1. Assicurati che i dati dall'UI siano nell'oggetto 'weeklyData'
+                updateDataFromUI(currentDay); 
+                
+                // 2. Salva su localStorage
+                localStorage.setItem('venousReturnPlan_v2', JSON.stringify(weeklyData));
+                localStorage.setItem('venousReturnWeeklyCost_v2', weeklyCost);
+                
+                // 3. Feedback utente
+                saveStatus.textContent = `Dati salvati ${isManual ? 'manualmente' : 'automaticamente'} (${new Date().toLocaleTimeString()})`;
+                saveStatus.classList.remove('error');
+                console.log(`Data ${isManual ? 'manually' : 'automatically'} saved at ${new Date().toLocaleTimeString()}`);
+                 
+                 // Pulisci il messaggio dopo un po' (solo per salvataggio automatico)
+                 if (!isManual) {
+                     setTimeout(() => {
+                         // Controlla se nel frattempo non è apparso un altro messaggio
+                         if (saveStatus.textContent.includes('automaticamente')) {
+                              saveStatus.textContent = "";
+                         }
+                     }, 3000);
+                 }
+
+            } catch (e) {
+                console.error("Errore durante il salvataggio dei dati:", e);
+                saveStatus.textContent = "Errore nel salvataggio! Spazio esaurito o dati corrotti?";
+                saveStatus.classList.add('error');
+                 if (e.name === 'QuotaExceededError') {
+                      alert('Errore: Spazio di archiviazione locale pieno. Non è possibile salvare ulteriori dati. Prova a esportare i dati e pulire la memoria del sito.');
+                 }
+            }
+        }
+        
+        // Funzione debounce per salvare automaticamente dopo un tot di inattività
+        function debouncedSave() {
+            clearTimeout(saveTimeout);
+            saveStatus.textContent = "Salvataggio in corso..."; // Feedback immediato
+            saveStatus.classList.remove('error');
+            saveTimeout = setTimeout(() => saveData(false), 1500); // Salva dopo 1.5 secondi di inattività
+        }
+        
+        // Salva immediatamente (usato dal bottone "Salva Ora")
+        function forceSave() {
+             saveData(true); // Passa true per indicare salvataggio manuale
+        }
+
+        function createDayButtons() { /* Come prima */
+            daySelector.innerHTML = ''; 
+            daysOfWeek.forEach(day => {
+                const button = document.createElement('button');
+                button.textContent = day.substring(0, 3); // Abbreviazione per più spazio? O lascia completo?
+                button.classList.add('day-btn');
+                button.dataset.day = day;
+                // NO event listener qui, usiamo delegation
+                daySelector.appendChild(button);
+            });
+        }
+        
+        function selectDay(day) {
+            // 1. Salva i dati del giorno *precedente* prima di cambiare
+            // Nota: updateDataFromUI ora legge dall'UI e aggiorna l'oggetto JS.
+            // Il salvataggio effettivo su localStorage avviene con debouncedSave o forceSave.
+            updateDataFromUI(currentDay); 
+
+            // 2. Aggiorna currentDay
+            currentDay = day;
+
+            // 3. Aggiorna UI per il nuovo giorno
+            currentDayTitle.textContent = `Piano per ${day}`;
+            
+            // Aggiorna stile bottoni
+             document.querySelectorAll('.day-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.day === day);
+            });
+
+            // Popola i campi INTERATTIVI con i dati utente (o vuoti se non inseriti)
+            mealTypes.forEach(meal => {
+                const textarea = document.getElementById(`${meal}Text`);
+                const checkbox = document.getElementById(`${meal}Check`);
+                const section = document.getElementById(`${meal}Section`);
+                
+                // Usa l'operatore optional chaining (?) per sicurezza
+                textarea.value = weeklyData[day]?.[meal]?.text || ''; 
+                checkbox.checked = weeklyData[day]?.[meal]?.completed || false;
+                section.classList.toggle('checked', checkbox.checked);
+            });
+
+            // Popola le note
+            dailyNotes.value = weeklyData[day]?.notes || '';
+
+            // Popola stato integratori
+            supplements.forEach(sup => {
+                const checkbox = document.getElementById(`sup-${sup.id}`);
+                 if(checkbox) {
+                    checkbox.checked = weeklyData[day]?.supplements?.[sup.id] || false;
+                 }
+            });
+            
+             // Pulisci lo stato di salvataggio quando cambi giorno
+             saveStatus.textContent = "";
+             saveStatus.classList.remove('error');
+             console.log(`Visualizzazione aggiornata per: ${day}`);
+        }
+
+         function updateDataFromUI(dayToUpdate) {
+              // Assicura che la struttura base esista per il giorno da aggiornare
+              if (!weeklyData[dayToUpdate]) {
+                   weeklyData[dayToUpdate] = { notes: "", supplements: {} };
+                   mealTypes.forEach(meal => { weeklyData[dayToUpdate][meal] = { text: "", completed: false }; });
+                   supplements.forEach(sup => { weeklyData[dayToUpdate].supplements[sup.id] = false; });
+                   console.warn(`Struttura dati inizializzata per ${dayToUpdate} durante l'aggiornamento.`);
+               }
+              
+             // Aggiorna pasti dall'UI
+             mealTypes.forEach(meal => {
+                const textarea = document.getElementById(`${meal}Text`);
+                const checkbox = document.getElementById(`${meal}Check`);
+                 // Assicura che l'oggetto pasto esista prima di scriverci
+                 if (!weeklyData[dayToUpdate][meal]) {
+                      weeklyData[dayToUpdate][meal] = { text: '', completed: false };
+                 }
+                weeklyData[dayToUpdate][meal].text = textarea.value;
+                weeklyData[dayToUpdate][meal].completed = checkbox.checked;
+             });
+             
+             // Aggiorna note
+            weeklyData[dayToUpdate].notes = dailyNotes.value;
+            
+             // Aggiorna integratori
+             // Assicura che l'oggetto supplements esista
+             if (!weeklyData[dayToUpdate].supplements) {
+                 weeklyData[dayToUpdate].supplements = {};
+             }
+             supplements.forEach(sup => {
+                const checkbox = document.getElementById(`sup-${sup.id}`);
+                 if (checkbox) { 
+                    weeklyData[dayToUpdate].supplements[sup.id] = checkbox.checked;
+                 } else {
+                     // Se la checkbox non esiste (errore?), inizializza comunque a false
+                     if (weeklyData[dayToUpdate].supplements[sup.id] === undefined) {
+                         weeklyData[dayToUpdate].supplements[sup.id] = false;
+                     }
+                 }
+             });
+             
+             // Aggiorna costo settimanale (letto direttamente dall'input)
+             weeklyCost = weeklyCostInput.value;
+             
+             // Questa funzione aggiorna solo l'oggetto JS 'weeklyData'.
+             // Il salvataggio effettivo in localStorage è separato.
+             // console.log(`Dati UI letti e aggiornati in memoria per ${dayToUpdate}.`);
+        }
+        
+        // --- Gestione Eventi con Delegation ---
+        function addEventListeners() {
+             // Listener per i bottoni dei giorni
+             daySelector.addEventListener('click', function(event) {
+                 if (event.target.classList.contains('day-btn')) {
+                     selectDay(event.target.dataset.day);
+                 }
+             });
+
+             // Listener per input/change nel contenitore del piano giornaliero
+             dailyPlanContainer.addEventListener('input', function(event) {
+                 const target = event.target;
+                 // Textarea dei pasti o note
+                 if (target.tagName === 'TEXTAREA' && (target.dataset.meal || target.id === 'dailyNotes')) {
+                    updateDataFromUI(currentDay); // Aggiorna subito in memoria
+                    debouncedSave(); // Pianifica salvataggio
+                 }
+                 // Campo costo
+                 if (target.id === 'weeklyCost') {
+                     updateDataFromUI(currentDay); // Aggiorna costo in memoria
+                     debouncedSave(); // Pianifica salvataggio
+                 }
+             });
+
+             dailyPlanContainer.addEventListener('change', function(event) {
+                 const target = event.target;
+                 // Checkbox pasti
+                  if (target.type === 'checkbox' && target.dataset.meal) {
+                     const mealType = target.dataset.meal;
+                     const section = document.getElementById(`${mealType}Section`);
+                     section.classList.toggle('checked', target.checked);
+                     updateDataFromUI(currentDay); // Aggiorna in memoria
+                     debouncedSave(); // Pianifica salvataggio
+                  }
+                  // Checkbox integratori
+                  if (target.type === 'checkbox' && target.dataset.supplementId) {
+                     updateDataFromUI(currentDay); // Aggiorna in memoria
+                     debouncedSave(); // Pianifica salvataggio
+                  }
+             });
+            
+            // Listener per il bottone Salva Ora
+            manualSaveButton.addEventListener('click', forceSave);
+            
+            // Listener per il bottone di esportazione
+            exportButton.addEventListener('click', exportDataToCSV);
+        }
+        
+         // --- Funzione Esportazione CSV (invariata logicamente, ma ricontrollata) ---
+         function exportDataToCSV() {
+             updateDataFromUI(currentDay); // Assicura che gli ultimi dati UI siano nell'oggetto
+              
+              let csvContent = "data:text/csv;charset=utf-8,";
+              const headers = ["Giorno", "Pasto", "Descrizione_Consumato", "Completato", "Note_Giornaliere", "Integratori_Presi", "Costo_Settimanale_EUR"];
+              csvContent += headers.join(",") + "\r\n";
+
+              daysOfWeek.forEach(day => {
+                  const dayData = weeklyData[day];
+                  if (!dayData) return; 
+
+                   const dailyNotesFormatted = `"${(dayData.notes || "").replace(/"/g, '""')}"`; 
+                   const supplementsTaken = supplements
+                       .filter(sup => dayData.supplements?.[sup.id])
+                       .map(sup => sup.name)
+                       .join("; "); 
+                   const supplementsFormatted = `"${supplementsTaken}"`;
+                   
+                   let isFirstRowOfDay = true; // Flag per scrivere note/costo solo sulla prima riga del giorno
+
+                   mealTypes.forEach(meal => {
+                       const mealData = dayData[meal];
+                       // Esporta solo se c'è testo o se è stato checkato (anche se vuoto)
+                       if (mealData && (mealData.text || mealData.completed)) { 
+                           const descriptionFormatted = `"${(mealData.text || "").replace(/"/g, '""')}"`; 
+                           const completedStatus = mealData.completed ? "Sì" : "No";
+                           
+                           const notesForThisRow = isFirstRowOfDay ? dailyNotesFormatted : '""';
+                           const supplementsForThisRow = isFirstRowOfDay ? supplementsFormatted : '""';
+                           // Scrivi costo solo il Lunedì sulla prima riga scritta per quel giorno
+                           const costForThisRow = (day === daysOfWeek[0] && isFirstRowOfDay) ? `"${weeklyCost}"` : '""'; 
+
+                           const row = [day, mealNames[meal], descriptionFormatted, completedStatus, notesForThisRow, supplementsForThisRow, costForThisRow];
+                           csvContent += row.join(",") + "\r\n";
+                           isFirstRowOfDay = false; // Le righe successive del giorno non avranno note/costo
+                       }
+                   });
+                   
+                   // Se non ci sono pasti per il giorno, ma ci sono note o integratori, aggiungi una riga
+                   if (isFirstRowOfDay && (dayData.notes || supplementsTaken)) {
+                         const notesForThisRow = dailyNotesFormatted;
+                         const supplementsForThisRow = supplementsFormatted;
+                         const costForThisRow = (day === daysOfWeek[0]) ? `"${weeklyCost}"` : '""'; 
+                         const row = [day, "N/A", '""', "N/A", notesForThisRow, supplementsForThisRow, costForThisRow];
+                         csvContent += row.join(",") + "\r\n";
+                   }
+              });
+
+              const encodedUri = encodeURI(csvContent);
+              const link = document.createElement("a");
+              link.setAttribute("href", encodedUri);
+              const timestamp = new Date().toISOString().slice(0, 10); 
+              link.setAttribute("download", `piano_venoso_utente_${timestamp}.csv`);
+              document.body.appendChild(link); 
+              link.click();
+              document.body.removeChild(link);
+              
+              saveStatus.textContent = "Dati esportati in CSV.";
+              saveStatus.classList.remove('error');
+              setTimeout(() => { saveStatus.textContent = ""; }, 4000);
+         }
+
+        // --- Inizializzazione ---
+        document.addEventListener('DOMContentLoaded', initializeApp);
+
+    </script>
+    <!-- Eventualmente aggiungi qui link a FontAwesome se vuoi usare le icone per i pasti (già nel CSS ma serve il link) -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> -->
+
+</body>
+</html>
