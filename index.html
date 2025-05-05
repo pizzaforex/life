@@ -3,345 +3,453 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Piano Personale Ritorno Venoso V2</title>
+    <title>Piano Benessere Personale V5</title>
+
+    <!-- 1. Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- 2. Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <style>
         :root {
-            --primary-color: #005f73;
-            --secondary-color: #0a9396;
-            --accent-color: #94d2bd;
-            --light-bg: #e9d8a6; /* Un po' più tenue */
-            --content-bg: #fdfbf5; /* Sfondo contenuti più chiaro */
-            --reference-bg: #f0f3f5; /* Sfondo per la reference diet */
-            --text-color: #212529;
-            --light-text: #f8f9fa;
-            --border-color: #dee2e6;
-            --checked-color: #2a9d8f;
-            --error-color: #d9534f;
-            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Palette Colori Rivista */
+            --bg-main: #f4f6f8; /* Grigio chiaro per sfondo pagina */
+            --bg-content: #ffffff; /* Bianco per contenuti principali */
+            --bg-alt: #f8f9fa; /* Bianco leggermente off-white per elementi alternativi */
+            --bg-reference: #fffaf0; /* Giallo/Crema molto chiaro per reference */
+            --bg-checked: #f0f9ff; /* Blu chiarissimo per checked */
+            --bg-cost: #fef9e7; /* Giallo tenue per sezione costo */
+
+            --text-primary: #212529; /* Nero per testo importante */
+            --text-secondary: #495057; /* Grigio scuro per testo secondario */
+            --text-tertiary: #6c757d; /* Grigio medio per hint/didascalie */
+            --text-light: #ffffff; /* Testo bianco */
+
+            --border-color: #dee2e6; /* Grigio chiaro per bordi standard */
+            --border-color-light: #e9ecef; /* Grigio chiarissimo per separatori interni */
+
+            --accent-primary: #007bff; /* Blu primario */
+            --accent-primary-dark: #0056b3;
+            --accent-secondary: #fdac53; /* Ocra/Giallo caldo secondario */
+            --success-color: #28a745; /* Verde successo */
+            --danger-color: #dc3545; /* Rosso errore */
+
+            /* Tipografia */
+            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+            /* Spaziature e Raggi */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-xxl: 48px;
+            --border-radius-sm: 6px;
+            --border-radius-md: 10px;
+            --border-radius-lg: 16px;
+            --shadow-soft: 0 6px 20px rgba(0, 0, 0, 0.07);
         }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
         body {
             font-family: var(--font-main);
-            margin: 0;
-            padding: 20px;
-            background-color: var(--light-bg);
-            color: var(--text-color);
-            line-height: 1.6;
+            font-weight: 400;
+            line-height: 1.65; /* Leggermente aumentata */
+            background-color: var(--bg-main);
+            color: var(--text-secondary);
+            padding: var(--spacing-lg);
+            font-size: 16px;
         }
 
         .container {
-            max-width: 1100px; /* Aumentato per possibile layout a 2 colonne */
-            margin: 20px auto;
-            background-color: var(--content-bg);
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        
-        .main-layout {
-            display: flex;
-            flex-wrap: wrap; /* Cade in verticale su schermi piccoli */
-            gap: 30px;
+            max-width: 1320px; /* Ancora un po' più largo */
+            margin: var(--spacing-xl) auto;
+            background-color: var(--bg-content);
+            padding: var(--spacing-xl) var(--spacing-xxl);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-soft);
         }
 
-        .tracking-section {
-            flex: 2; /* Occupa più spazio */
-            min-width: 300px; /* Larghezza minima */
+        /* ===== TIPOGRAFIA ===== */
+        h1, h2, h3, h4 {
+            font-family: var(--font-main);
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-md);
+            font-weight: 600;
         }
-
-        .reference-section {
-            flex: 1; /* Occupa meno spazio */
-            min-width: 280px;
-            background-color: var(--reference-bg);
-            padding: 20px;
-            border-radius: 5px;
-            border: 1px solid var(--border-color);
+        h1 {
+            text-align: center;
+            font-size: 2.6em;
+            font-weight: 700;
+            margin-bottom: var(--spacing-xxl);
         }
-
-
-        h1, h2, h3 {
-            color: var(--primary-color);
-            margin-bottom: 15px;
-        }
-        h1 { text-align: center; margin-bottom: 30px;}
         h2 {
-            margin-top: 25px;
-            border-bottom: 2px solid var(--secondary-color);
-            padding-bottom: 8px;
-            font-size: 1.4em;
+            font-size: 1.7em;
+            margin-top: var(--spacing-xl);
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 1px solid var(--border-color-light);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md); /* Più spazio icona-titolo */
         }
-         h3 {
-             color: var(--secondary-color);
-             font-size: 1.2em;
-             margin-bottom: 10px;
+        h2 .fa-solid, h2 .fa-regular {
+            color: var(--accent-primary); /* Icone H2 blu */
+            font-size: 0.9em;
+        }
+        h3 { /* Titoli sezioni interne */
+             font-size: 1.25em;
+             margin-bottom: var(--spacing-md);
+             font-weight: 600;
+             color: var(--text-primary);
+             display: flex;
+             align-items: center;
+             gap: var(--spacing-sm);
          }
-         .reference-section h2 {
-             font-size: 1.3em;
-             margin-top: 0;
+         h3 .fa-solid {
+            color: var(--accent-secondary); /* Icone H3 ocra */
+            font-size: 0.9em;
          }
-         .reference-section h3 {
+         h4 { /* Titoli Pasti */
              font-size: 1.1em;
-             margin-top: 15px;
+             margin: 0;
+             display: flex;
+             align-items: center;
+             gap: var(--spacing-sm);
+             font-weight: 500; /* Medium */
+             color: var(--text-primary);
+         }
+         h4 .fa-solid {
+            color: var(--accent-secondary); /* Icone pasti ocra */
+            font-size: 1.0em;
          }
 
+        /* ===== LAYOUT PRINCIPALE ===== */
+        .main-layout { display: flex; flex-wrap: wrap; gap: var(--spacing-xxl); }
+        .tracking-section { flex: 3; min-width: 400px; }
+        .reference-section { flex: 2; min-width: 350px; }
 
+        /* ===== DAY SELECTOR ===== */
         .day-selector {
             display: flex;
             justify-content: center;
-            margin-bottom: 25px;
+            margin-bottom: var(--spacing-xl);
             flex-wrap: wrap;
-            gap: 8px;
+            gap: var(--spacing-sm);
+            border-bottom: 1px solid var(--border-color-light);
+            padding-bottom: var(--spacing-xl);
         }
-
         .day-btn {
-            padding: 10px 15px;
-            background-color: var(--secondary-color);
-            color: var(--light-text);
-            border: none;
-            border-radius: 5px;
+            padding: 10px 20px;
+            background-color: var(--bg-alt);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color); /* Bordo visibile */
+            border-radius: var(--border-radius-md);
             cursor: pointer;
-            font-size: 1em;
-            transition: background-color 0.3s ease;
+            font-size: 0.95em;
+            font-weight: 500;
+            transition: all 0.2s ease-in-out;
+        }
+        .day-btn:hover {
+            background-color: #e9ecef;
+            border-color: #ced4da;
+        }
+        .day-btn.active {
+            background-color: var(--accent-primary);
+            color: var(--text-light);
+            border-color: var(--accent-primary);
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0, 123, 255, 0.2);
         }
 
-        .day-btn:hover, .day-btn.active {
-            background-color: var(--primary-color);
-        }
-
+        /* ===== MEAL SECTION ===== */
         .meal-section {
-            margin-bottom: 20px;
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            border-radius: 5px;
-            background-color: #fff;
-            transition: background-color 0.3s ease;
+            margin-bottom: var(--spacing-lg);
+            border: 1px solid var(--border-color); /* Bordo più definito */
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-md);
+            background-color: var(--bg-alt); /* Sfondo leggermente grigio */
+            transition: all 0.3s ease;
+            position: relative; /* Per ::before */
         }
+         /* Bordo laterale sottile */
+         .meal-section::before {
+             content: '';
+             position: absolute;
+             left: 0;
+             top: -1px; /* Allinea con bordo */
+             bottom: -1px;
+             width: 5px;
+             background-color: var(--border-color); /* Grigio base */
+             border-radius: var(--border-radius-md) 0 0 var(--border-radius-md);
+             transition: background-color 0.3s ease;
+         }
 
         .meal-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 10px;
+            margin-bottom: var(--spacing-md);
         }
-
-        .meal-header h4 { /* Usiamo H4 per i titoli dei pasti */
-            margin: 0;
-            color: var(--secondary-color);
-            font-size: 1.1em;
-        }
-
+        /* Checkbox stile Apple */
         .meal-check {
-            transform: scale(1.3);
-            margin-left: 10px;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border: 1.5px solid #caced3; /* Grigio più scuro per bordo */
+            border-radius: 50%;
             cursor: pointer;
-            accent-color: var(--checked-color);
+            position: relative;
+            transition: all 0.2s ease-in-out;
+            margin-left: var(--spacing-md);
+            flex-shrink: 0;
+            background-color: #fff; /* Sfondo bianco interno */
+        }
+        .meal-check:hover { border-color: #adb5bd; }
+        .meal-check:checked {
+            background-color: var(--accent-primary);
+            border-color: var(--accent-primary);
+        }
+        .meal-check:checked::after {
+             content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+             color: white; font-size: 13px; position: absolute;
+             top: 50%; left: 50%; transform: translate(-50%, -50%);
         }
 
         .meal-content textarea {
-            width: calc(100% - 22px); /* Account for padding */
-            min-height: 60px;
+            width: 100%;
+            min-height: 75px; /* Leggermente più alta */
             border: 1px solid var(--border-color);
-            border-radius: 4px;
-            padding: 10px;
-            font-family: inherit;
-            font-size: 0.95em;
+            border-radius: var(--border-radius-sm);
+            padding: var(--spacing-sm) var(--spacing-md);
+            font-family: var(--font-main);
+            font-size: 1em;
+            line-height: 1.6;
             resize: vertical;
-            margin-top: 5px;
+            margin-top: var(--spacing-sm);
+            background-color: var(--bg-content);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
-
         .meal-content textarea:focus {
             outline: none;
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 0 2px rgba(10, 147, 150, 0.2);
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
         }
 
-         /* Style for checked state */
+         /* Meal Checked State */
         .meal-section.checked {
-            background-color: #e8f5e9cc; /* Light green background, slightly transparent */
-            border-left: 5px solid var(--checked-color);
+            background-color: var(--bg-checked); /* Sfondo blu chiaro */
+            border-color: #bde0fe; /* Bordo blu più scuro */
         }
-        .meal-section.checked .meal-header h4 {
-            text-decoration: line-through;
-            color: #6c757d; /* Grigio più scuro */
+         .meal-section.checked::before {
+             background-color: var(--accent-primary); /* Bordo laterale blu pieno */
+         }
+        .meal-section.checked .meal-header h4 { color: var(--text-tertiary); }
+        .meal-section.checked .meal-header h4 .fa-solid { color: var(--text-tertiary); opacity: 0.7; }
+        .meal-section.checked .meal-content { opacity: 0.7; } /* Manteniamo opacità */
+
+        /* ===== NOTES & COST SECTION ===== */
+        .notes-section, .cost-section, .supplements-section {
+            margin-top: var(--spacing-xl);
+            padding-top: var(--spacing-lg);
+            border-top: 1px solid var(--border-color-light);
         }
-
-
-        .notes-section textarea, .cost-section input {
-            width: calc(100% - 22px);
+        .notes-section textarea, .cost-section input[type="number"] {
+            /* Stile input/textarea ereditato da .meal-content textarea */
+            width: 100%;
             border: 1px solid var(--border-color);
-            border-radius: 4px;
-            padding: 10px;
-            font-family: inherit;
-            font-size: 0.95em;
-            margin-top: 5px;
+            border-radius: var(--border-radius-sm);
+            padding: var(--spacing-sm) var(--spacing-md);
+            font-family: var(--font-main);
+            font-size: 1em;
+            margin-top: var(--spacing-sm);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            background-color: var(--bg-content);
         }
-         .notes-section textarea {
-             min-height: 80px;
-             resize: vertical;
+         .notes-section textarea { min-height: 110px; resize: vertical; }
+         .notes-section textarea:focus, .cost-section input[type="number"]:focus {
+             outline: none;
+             border-color: var(--accent-primary);
+             box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
          }
 
-        .supplements-section ul {
-            list-style: none;
-            padding: 0;
-        }
+        .cost-section {
+             padding: var(--spacing-md);
+             border-radius: var(--border-radius-md);
+             background-color: var(--bg-cost); /* Sfondo giallo */
+             border: 1px solid #fcefc7; /* Bordo coordinato */
+             margin-top: var(--spacing-lg); /* Spazio ridotto se sopra ad altro */
+         }
+        .cost-section p { margin-bottom: var(--spacing-sm); font-style: italic; color: var(--text-tertiary); font-size: 0.9em; }
+        .cost-section label { font-weight: 500; margin-right: var(--spacing-sm); color: var(--text-primary); }
+        .cost-section input[type="number"] { width: 140px; font-weight: 500; background-color: var(--bg-content); }
 
-        .supplements-section li {
-            margin-bottom: 12px; /* Aumentato spazio */
-            display: flex;
-            align-items: flex-start; /* Allinea all'inizio per dosaggi lunghi */
-            flex-wrap: wrap; /* Permette al link di andare a capo */
-        }
-         .supplements-section .sup-info {
+        /* ===== SUPPLEMENTS SECTION ===== */
+         .supplements-section ul { list-style: none; margin-top: var(--spacing-md); }
+         .supplements-section li {
+             margin-bottom: var(--spacing-sm);
              display: flex;
+             flex-wrap: wrap;
              align-items: center;
-             flex-grow: 1; /* Occupa spazio disponibile */
-             margin-right: 10px; /* Spazio prima del link */
+             padding: var(--spacing-md); /* Padding interno */
+             border: 1px solid var(--border-color-light); /* Bordo leggero */
+             border-radius: var(--border-radius-sm);
+             background-color: var(--bg-alt); /* Sfondo grigio chiaro */
          }
+         .supplements-section .sup-info { display: flex; align-items: center; flex-grow: 1; margin-right: var(--spacing-md); }
+         /* Checkbox stile Apple */
          .supplements-section input[type="checkbox"] {
-             margin-right: 10px;
-             transform: scale(1.1);
-             cursor: pointer;
-             accent-color: var(--checked-color);
-             margin-top: 2px; /* Allineamento verticale migliore */
+             appearance: none; width: 22px; height: 22px; border: 1.5px solid #caced3;
+             border-radius: 50%; cursor: pointer; position: relative; transition: all 0.2s ease-in-out;
+             margin-right: var(--spacing-md); flex-shrink: 0; background-color: #fff;
          }
-         .supplements-section label {
-             font-weight: bold;
-             margin-right: 8px;
-         }
-         .supplement-dosage {
-             font-size: 0.85em;
-             color: #555;
-             font-style: italic;
-             margin-top: 1px; /* Allineamento */
-         }
-        .supplement-link {
-            font-size: 0.9em;
-            color: var(--primary-color);
-            text-decoration: none;
-            padding: 3px 8px;
-            border: 1px solid var(--accent-color);
-            border-radius: 3px;
-            transition: background-color 0.3s, color 0.3s;
-            white-space: nowrap; /* Evita che 'Link' vada a capo */
-            margin-top: 3px; /* Spazio se va a capo */
-        }
-        .supplement-link:hover {
-             background-color: var(--accent-color);
-             color: var(--primary-color);
-        }
+         .supplements-section input[type="checkbox"]:hover { border-color: #adb5bd; }
+         .supplements-section input[type="checkbox"]:checked { background-color: var(--accent-primary); border-color: var(--accent-primary); }
+         .supplements-section input[type="checkbox"]:checked::after { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: white; font-size: 12px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
 
-        .cost-section label {
-            font-weight: bold;
-            margin-right: 5px;
-        }
-        .cost-section input {
-             width: 100px;
-             margin-left: 5px;
-        }
+         .supplements-section label { font-weight: 500; margin-right: var(--spacing-sm); color: var(--text-primary); cursor: pointer; }
+         .supplement-dosage { font-size: 0.9em; color: var(--text-tertiary); }
+         .supplement-link {
+             font-size: 0.9em; color: var(--accent-primary); text-decoration: none;
+             padding: var(--spacing-xs) var(--spacing-sm); border: 1px solid transparent;
+             border-radius: var(--border-radius-sm); transition: all 0.2s ease-in-out;
+             white-space: nowrap; margin-left: auto; display: inline-flex; align-items: center;
+             gap: var(--spacing-xs);
+         }
+         .supplement-link:hover { background-color: rgba(0, 123, 255, 0.1); }
+         .supplement-link .fa-solid { font-size: 0.9em; }
 
+        /* ===== SAVE STATUS ===== */
         .save-status {
             text-align: center;
-            margin-top: 20px;
-            font-style: italic;
-            color: #555;
-            min-height: 1.5em; /* Aumentato per messaggi più lunghi */
-            font-weight: bold;
+            margin: var(--spacing-lg) 0 var(--spacing-md) 0;
+            font-size: 0.9em; min-height: 1.5em; font-weight: 500;
+            transition: opacity 0.3s ease, color 0.3s ease; opacity: 0;
         }
-        .save-status.error {
-            color: var(--error-color);
-        }
-        
+        .save-status.visible { opacity: 1; }
+        .save-status.error { color: var(--danger-color); }
+        .save-status.success { color: var(--success-color); }
+
+        /* ===== ACTION BUTTONS ===== */
         .action-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
+            display: flex; justify-content: flex-end; gap: var(--spacing-md);
+            margin-top: var(--spacing-xl); padding-top: var(--spacing-lg);
+            border-top: 1px solid var(--border-color-light);
         }
-
         .action-button {
-            padding: 10px 20px;
-            background-color: var(--primary-color);
-            color: var(--light-text);
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: background-color 0.3s ease;
+            padding: 12px 25px; /* Padding generoso */
+            border: none; border-radius: var(--border-radius-md); cursor: pointer;
+            font-size: 0.95em; font-weight: 500; transition: all 0.2s ease-in-out;
+            display: inline-flex; align-items: center; gap: var(--spacing-sm);
         }
-        .action-button:hover {
-             background-color: var(--secondary-color);
-        }
-        .action-button.manual-save {
-            background-color: var(--accent-color);
-            color: var(--primary-color);
-        }
-         .action-button.manual-save:hover {
-            background-color: #7ab8a5; /* Scurisce leggermente l'accento */
-         }
+        .action-button:hover { filter: brightness(1.05); } /* Leggermente più chiaro */
+        .action-button:active { filter: brightness(0.95); transform: translateY(1px); }
+        .action-button.manual-save { background-color: var(--accent-primary); color: var(--text-light); }
+        .action-button.export { background-color: var(--bg-alt); color: var(--accent-primary); border: 1px solid var(--border-color); }
+        .action-button.export:hover { background-color: #e9ecef; border-color: #ced4da; }
 
-        /* Stili per la sezione Reference Diet */
-        .reference-diet-details {
-             margin-top: 15px;
+        /* ===== REFERENCE SECTION ===== */
+        .reference-section {
+            background-color: var(--bg-reference); /* Sfondo crema */
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-md);
+            border: 1px solid #faeecd; /* Bordo coordinato */
         }
+        .reference-section h2 { margin-top: 0; border-bottom-color: #faeecd; }
+        .reference-section h2 .fa-regular { color: var(--accent-secondary); } /* Icona ocra */
+
+        .reference-diet-details { margin-top: var(--spacing-lg); }
         .reference-diet-details summary {
-            font-weight: bold;
-            cursor: pointer;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-            font-size: 1.1em;
+            font-weight: 600; cursor: pointer; color: var(--text-primary);
+            font-size: 1.1em; list-style: none; padding: var(--spacing-sm) 0;
+            transition: color 0.2s ease; display: flex; justify-content: space-between;
+            align-items: center; border-bottom: 1px solid var(--border-color-light);
         }
+        .reference-diet-details summary:hover { color: var(--accent-secondary); } /* Hover ocra */
+        .reference-diet-details summary::after { /* Chevron */
+            content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900; font-size: 0.8em;
+            color: var(--text-tertiary); transition: transform 0.3s ease; margin-left: var(--spacing-sm);
+        }
+        .reference-diet-details[open] summary { border-bottom: none; } /* Nasconde bordo quando aperto */
+        .reference-diet-details[open] summary::after { transform: rotate(180deg); }
+
+        /* Stile contenuto reference quando aperto */
+        .reference-diet-details[open] #referenceDietContent {
+             margin-top: var(--spacing-md);
+        }
+
         .reference-day {
-            margin-bottom: 15px;
+            margin-bottom: var(--spacing-lg); padding: 0 0 var(--spacing-md) 0; /* Solo padding sotto */
+             border-bottom: 1px dashed var(--border-color-light); /* Separatore tratteggiato tra giorni */
         }
-        .reference-day h4 { /* Titolo giorno nella reference */
-             color: var(--primary-color);
-             margin-bottom: 8px;
-             font-size: 1em;
-             border-bottom: 1px solid var(--accent-color);
-             padding-bottom: 3px;
+        .reference-day:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .reference-day h4 { /* Titolo giorno */
+             color: var(--text-primary); font-size: 1.0em; font-weight: 600;
+             margin-bottom: var(--spacing-md); padding-bottom: 0; border-bottom: none;
+             display: flex; align-items: center; gap: var(--spacing-sm);
         }
-        .reference-meal {
-            margin-bottom: 8px;
-            padding-left: 10px;
-        }
+         .reference-day h4 .fa-regular { color: var(--text-secondary); }
+
+        .reference-meal { margin-bottom: var(--spacing-md); padding-left: 0; }
         .reference-meal strong { /* Nome pasto */
-            color: var(--secondary-color);
-            font-size: 0.95em;
+            color: var(--text-primary); font-size: 1em; font-weight: 500;
+            display: flex; align-items: center; gap: var(--spacing-sm); margin-bottom: var(--spacing-xs);
         }
+        .reference-meal strong .fa-solid { color: var(--accent-secondary); font-size: 0.9em; } /* Icona ocra */
+
         .reference-meal p { /* Descrizione pasto */
-            margin: 2px 0 4px 0;
-            font-size: 0.9em;
-            white-space: pre-wrap; /* Mantiene gli a capo del testo originale */
+            margin: 0 0 var(--spacing-sm) 0; font-size: 0.95em; white-space: pre-wrap;
+            color: var(--text-secondary); padding-left: 28px; /* Indenta testo */
         }
         .substitute-text {
-            font-style: italic;
-            color: #444;
-            font-size: 0.85em;
-            margin-left: 10px;
-            white-space: pre-wrap;
+            font-style: normal; color: var(--text-secondary); font-size: 0.9em;
+            margin: var(--spacing-sm) 0 0 28px; padding: var(--spacing-sm) var(--spacing-md);
+            background-color: #fff; /* Sfondo bianco per alternativa */
+            border-radius: var(--border-radius-sm); display: block; white-space: pre-wrap;
+            border: 1px dashed var(--border-color); /* Bordo tratteggiato */
         }
         .substitute-text::before {
-            content: "Sostituto: ";
-            font-weight: bold;
+            content: "Alternativa:"; font-weight: 600; color: var(--text-secondary);
+            display: block; margin-bottom: var(--spacing-xs); font-size: 0.9em;
         }
 
-        /* Simple responsiveness */
-         @media (max-width: 900px) { /* Breakpoint per layout */
-             .main-layout {
-                 flex-direction: column;
-             }
-             .reference-section {
-                 margin-top: 20px;
-             }
+        /* ===== RESPONSIVENESS ===== */
+         @media (max-width: 1200px) {
+             .container { padding: var(--spacing-xl) var(--spacing-lg); }
+             .main-layout { gap: var(--spacing-xl); }
          }
-         @media (max-width: 600px) {
-            body { padding: 10px; }
-            .container { padding: 15px; }
-            h1 { font-size: 1.5em; }
-            h2 { font-size: 1.2em; }
-            .day-btn { padding: 8px 10px; font-size: 0.9em;}
-            .meal-header h4 { font-size: 1.05em; }
-            .action-buttons { flex-direction: column; align-items: center; }
+         @media (max-width: 992px) { /* Tablet Landscape / Smaller Desktop */
+             h1 { font-size: 2.2em; }
+             h2 { font-size: 1.5em; }
+             .tracking-section { min-width: 350px; }
+             .reference-section { min-width: 300px; }
+         }
+         @media (max-width: 768px) { /* Tablet Portrait */
+             .main-layout { flex-direction: column; }
+             .reference-section { margin-top: var(--spacing-xl); }
+             .container { padding: var(--spacing-lg); border-radius: var(--border-radius-md); }
+             body { padding: var(--spacing-md); }
+             h1 { font-size: 2em; margin-bottom: var(--spacing-xl); }
+             h2 { font-size: 1.4em; }
+             .action-buttons { justify-content: center; } /* Bottoni centrati */
+             .day-selector { justify-content: flex-start; overflow-x: auto; padding-bottom: var(--spacing-md);} /* Scroll orizzontale per bottoni giorni */
+         }
+         @media (max-width: 480px) { /* Mobile */
+            body { padding: var(--spacing-sm); font-size: 15px; }
+            .container { padding: var(--spacing-md); border-radius: var(--border-radius-sm); }
+            h1 { font-size: 1.8em; }
+            h2 { font-size: 1.3em; }
+            .day-btn { padding: 8px 15px; font-size: 0.9em;}
+            .action-buttons { flex-direction: column; align-items: stretch; gap: var(--spacing-sm); }
+            .action-button { width: 100%; }
+            .supplements-section .sup-info { flex-basis: 100%; margin-bottom: var(--spacing-sm);}
+            .supplement-link { margin-left: 0; margin-top: var(--spacing-sm); }
+            .cost-section input[type="number"] { width: 100%; }
          }
 
     </style>
@@ -349,107 +457,99 @@
 <body>
 
     <div class="container">
-        <h1>Piano Personale Ritorno Venoso</h1>
+        <h1>Piano Benessere Personale</h1>
 
         <div class="main-layout">
 
-            <!-- Sezione Tracking Interattivo -->
+            <!-- ========================== -->
+            <!-- SEZIONE TRACKING INTERATTIVO -->
+            <!-- ========================== -->
             <div class="tracking-section">
-                <div class="day-selector" id="daySelector">
-                    <!-- Buttons will be generated by JS -->
-                </div>
+                 <!-- Day Selector (verrà popolato da JS) -->
+                <div class="day-selector" id="daySelector"></div>
 
                 <div id="dailyPlan">
-                    <h2 id="currentDayTitle">Piano per Lunedì</h2>
+                     <!-- Titolo dinamico del giorno -->
+                    <h2 id="currentDayTitle"><i class="fa-regular fa-calendar"></i> Piano per ...</h2>
 
-                    <!-- Struttura Pasti (rimane simile) -->
+                    <!-- Sezioni Pasti (struttura HTML invariata) -->
                     <div class="meal-section" id="colazioneSection">
                         <div class="meal-header">
-                            <h4><i class="fas fa-mug-hot"></i> Colazione</h4>
-                            <input type="checkbox" class="meal-check" id="colazioneCheck" data-meal="colazione">
+                            <h4><i class="fa-solid fa-mug-saucer"></i> Colazione</h4>
+                            <input type="checkbox" class="meal-check" id="colazioneCheck" data-meal="colazione" title="Segna come completato">
                         </div>
-                        <div class="meal-content">
-                            <textarea id="colazioneText" data-meal="colazione" placeholder="Descrivi la colazione consumata/pianificata..."></textarea>
-                        </div>
+                        <div class="meal-content"><textarea id="colazioneText" data-meal="colazione" placeholder="Cosa hai mangiato? Aggiungi dettagli..."></textarea></div>
                     </div>
-                     <div class="meal-section" id="spuntinoMattinaSection">
+                    <div class="meal-section" id="spuntinoMattinaSection">
                         <div class="meal-header">
-                             <h4><i class="fas fa-apple-alt"></i> Spuntino Mattina</h4>
-                             <input type="checkbox" class="meal-check" id="spuntinoMattinaCheck" data-meal="spuntinoMattina">
+                            <h4><i class="fa-solid fa-apple-whole"></i> Spuntino Mattina</h4>
+                            <input type="checkbox" class="meal-check" id="spuntinoMattinaCheck" data-meal="spuntinoMattina" title="Segna come completato">
                         </div>
-                         <div class="meal-content">
-                             <textarea id="spuntinoMattinaText" data-meal="spuntinoMattina" placeholder="Descrivi lo spuntino..."></textarea>
-                         </div>
+                        <div class="meal-content"><textarea id="spuntinoMattinaText" data-meal="spuntinoMattina" placeholder="Descrivi lo spuntino..."></textarea></div>
                     </div>
                      <div class="meal-section" id="pranzoSection">
                          <div class="meal-header">
-                             <h4><i class="fas fa-utensils"></i> Pranzo</h4>
-                             <input type="checkbox" class="meal-check" id="pranzoCheck" data-meal="pranzo">
-                        </div>
-                         <div class="meal-content">
-                             <textarea id="pranzoText" data-meal="pranzo" placeholder="Descrivi il pranzo..."></textarea>
+                             <h4><i class="fa-solid fa-utensils"></i> Pranzo</h4>
+                             <input type="checkbox" class="meal-check" id="pranzoCheck" data-meal="pranzo" title="Segna come completato">
                          </div>
-                    </div>
-                     <div class="meal-section" id="spuntinoPomeriggioSection">
-                         <div class="meal-header">
-                             <h4><i class="fas fa-cookie-bite"></i> Spuntino Pomeriggio</h4>
-                             <input type="checkbox" class="meal-check" id="spuntinoPomeriggioCheck" data-meal="spuntinoPomeriggio">
-                         </div>
-                         <div class="meal-content">
-                             <textarea id="spuntinoPomeriggioText" data-meal="spuntinoPomeriggio" placeholder="Descrivi lo spuntino..."></textarea>
-                         </div>
+                         <div class="meal-content"><textarea id="pranzoText" data-meal="pranzo" placeholder="Descrivi il pranzo..."></textarea></div>
                      </div>
+                    <div class="meal-section" id="spuntinoPomeriggioSection">
+                         <div class="meal-header">
+                             <h4><i class="fa-solid fa-cookie-bite"></i> Spuntino Pomeriggio</h4>
+                             <input type="checkbox" class="meal-check" id="spuntinoPomeriggioCheck" data-meal="spuntinoPomeriggio" title="Segna come completato">
+                         </div>
+                         <div class="meal-content"><textarea id="spuntinoPomeriggioText" data-meal="spuntinoPomeriggio" placeholder="Descrivi lo spuntino..."></textarea></div>
+                    </div>
                     <div class="meal-section" id="cenaSection">
                          <div class="meal-header">
-                             <h4><i class="fas fa-moon"></i> Cena</h4>
-                             <input type="checkbox" class="meal-check" id="cenaCheck" data-meal="cena">
+                             <h4><i class="fa-solid fa-plate-wheat"></i> Cena</h4>
+                             <input type="checkbox" class="meal-check" id="cenaCheck" data-meal="cena" title="Segna come completato">
                          </div>
-                         <div class="meal-content">
-                            <textarea id="cenaText" data-meal="cena" placeholder="Descrivi la cena..."></textarea>
-                         </div>
+                         <div class="meal-content"><textarea id="cenaText" data-meal="cena" placeholder="Descrivi la cena..."></textarea></div>
                     </div>
 
-
-                    <!-- Sezione Note -->
+                    <!-- Note Giornaliere -->
                     <div class="notes-section">
-                        <h2>Note del Giorno</h2>
-                        <textarea id="dailyNotes" placeholder="Sintomi, allenamento, sensazioni, ecc..."></textarea>
+                        <h2><i class="fa-regular fa-pen-to-square"></i> Note del Giorno</h2>
+                        <textarea id="dailyNotes" placeholder="Come ti sei sentito? Sintomi, energia, allenamento, altro..."></textarea>
                     </div>
 
-                     <!-- Sezione Integratori -->
+                     <!-- Integratori -->
                      <div class="supplements-section">
-                        <h2>Monitoraggio Integratori Giornalieri</h2>
-                        <ul id="supplementList">
-                            <!-- Integratori verranno aggiunti da JS -->
-                        </ul>
+                        <h2><i class="fa-solid fa-pills"></i> Monitoraggio Integratori</h2>
+                        <ul id="supplementList"></ul>
                     </div>
 
-                     <!-- Sezione Costi -->
+                     <!-- Costi -->
                     <div class="cost-section">
-                         <h2>Costo Spesa Settimanale</h2>
+                         <h3><i class="fa-solid fa-receipt"></i> Costo Spesa Settimanale</h3>
                          <p>Stima iniziale: ~95 €</p>
-                         <label for="weeklyCost">Costo Effettivo Settimana (€):</label>
-                         <input type="number" id="weeklyCost" step="0.01" placeholder="Es: 98.50">
+                         <label for="weeklyCost">Costo Effettivo:</label>
+                         <input type="number" id="weeklyCost" step="0.01" placeholder="0.00 €">
                     </div>
 
+                    <!-- Status Salvataggio -->
                     <div class="save-status" id="saveStatus"></div>
-                    
+
+                    <!-- Pulsanti Azione -->
                     <div class="action-buttons">
-                         <button class="action-button manual-save" id="manualSaveButton">Salva Ora</button>
-                         <button class="action-button" id="exportButton">Esporta Dati (CSV)</button>
+                         <button class="action-button export" id="exportButton"><i class="fa-solid fa-download"></i> Esporta CSV</button>
+                         <button class="action-button manual-save" id="manualSaveButton"><i class="fa-solid fa-floppy-disk"></i> Salva Modifiche</button>
                     </div>
 
                 </div>
             </div>
 
-            <!-- Sezione Dieta di Riferimento (Statica) -->
+            <!-- ============================ -->
+            <!-- SEZIONE DIETA DI RIFERIMENTO -->
+            <!-- ============================ -->
             <div class="reference-section">
-                 <h2>Dieta Suggerita (Riferimento)</h2>
-                 <details class="reference-diet-details" open> <!-- 'open' lo mostra di default -->
-                      <summary>Mostra/Nascondi Dettagli Dieta</summary>
-                      <div id="referenceDietContent">
-                           <!-- Contenuto generato da JS -->
-                      </div>
+                 <h2><i class="fa-regular fa-rectangle-list"></i> Piano Alimentare Suggerito</h2>
+                 <details class="reference-diet-details" open>
+                      <summary>Visualizza Dettagli</summary>
+                      <!-- Contenuto Reference Diet (verrà popolato da JS) -->
+                      <div id="referenceDietContent"></div>
                  </details>
             </div>
 
@@ -457,18 +557,14 @@
     </div> <!-- Fine container -->
 
     <script>
+        // ========================================================================
+        // JAVASCRIPT CORE V5 (Completo e Funzionante)
+        // ========================================================================
         const daysOfWeek = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"];
         const mealTypes = ["colazione", "spuntinoMattina", "pranzo", "spuntinoPomeriggio", "cena"];
-        const mealNames = { // Nomi più carini per la visualizzazione
-            colazione: "Colazione",
-            spuntinoMattina: "Spuntino Mattina",
-            pranzo: "Pranzo",
-            spuntinoPomeriggio: "Spuntino Pomeriggio",
-            cena: "Cena"
-        };
+        const mealNames = { colazione: "Colazione", spuntinoMattina: "Spuntino Mattina", pranzo: "Pranzo", spuntinoPomeriggio: "Spuntino Pomeriggio", cena: "Cena" };
 
-        // --- DIETA DI RIFERIMENTO ---
-        // Ora include 'substitute' per i sostituti opzionali
+        // --- DIETA DI RIFERIMENTO (Esempio - Compilare con dati reali) ---
         const defaultWeeklyPlan = {
             "Lunedì": {
                 colazione: { text: "Yogurt greco 150g\nFrutti di bosco 100g\nFiocchi d'avena 40g\nMandorle 10g", substitute: "Latte p.s. 200ml + 4 fette biscottate integrali + marmellata senza zuccheri" },
@@ -484,30 +580,29 @@
                 spuntinoPomeriggio: { text: "Kiwi 2\nNoci 10g", substitute: "Yogurt greco 150g" },
                 cena: { text: "Sgombro al forno 150g\nInsalata mista (lattuga, rucola, pomodori) 200g\nPane integrale 30g\nOlio EVO 1 cucchiaio", substitute: "Merluzzo al vapore 160g + Cavolfiore 200g + Patate lesse 100g" },
             },
-            // Aggiungere substitute per gli altri giorni... (ho lasciato gli altri come prima per brevità)
             "Mercoledì": { colazione: { text: "Porridge d'avena (40g avena, 200ml acqua/latte)\nMirtilli 80g\nSemi di chia 10g", substitute: "" }, spuntinoMattina: { text: "Arancia 1\nNocciole 15g", substitute: "" }, pranzo: { text: "Riso integrale 80g con verdure miste saltate (zucchine, carote, peperoni) 250g\nUovo sodo 1\nOlio EVO 1 cucchiaio", substitute: "" }, spuntinoPomeriggio: { text: "Yogurt greco 150g\nFragole 100g", substitute: "" }, cena: { text: "Tacchino ai ferri 140g\nCavolfiore gratinato 200g\nOlio EVO 1 cucchiaio", substitute: "" } },
             "Giovedì": { colazione: { text: "Pancakes integrali 2 (farina integrale 50g, 1 uovo, latte)\nSciroppo d'acero 1 cucchiaino\nFrutti rossi 80g", substitute: "" }, spuntinoMattina: { text: "Pompelmo 1\nMandorle 15g", substitute: "" }, pranzo: { text: "Insalata di farro 80g con tonno al naturale 100g, pomodorini, cetrioli, olive nere\nOlio EVO 1 cucchiaio", substitute: "" }, spuntinoPomeriggio: { text: "Mela 1\nBurro di arachidi 15g", substitute: "" }, cena: { text: "Merluzzo al forno 160g con erbe aromatiche\nAsparagi al vapore 200g\nPatate lesse 150g\nOlio EVO 1 cucchiaio", substitute: "" } },
             "Venerdì": { colazione: { text: "Yogurt greco 150g\nKiwi 1\nGranola senza zuccheri 30g\nSemi di zucca 10g", substitute: "" }, spuntinoMattina: { text: "Pera 1\nNoci 15g", substitute: "" }, pranzo: { text: "Pasta integrale 80g con pesto leggero (basilico, pinoli, aglio, olio evo, poco parmigiano)\nFagiolini al vapore 150g", substitute: "" }, spuntinoPomeriggio: { text: "Frutti di bosco misti 100g\nYogurt magro 125g", substitute: "" }, cena: { text: "Polpette di lenticchie 150g\nPurea di cavolfiore 200g\nInsalata verde mista 100g\nOlio EVO 1 cucchiaio", substitute: "" } },
             "Sabato": { colazione: { text: "Latte p.s. 200ml\nFette biscottate integrali 4\nCrema di mandorle 20g\n1 Arancia", substitute: "" }, spuntinoMattina: { text: "Banana 1\nNocciole 15g", substitute: "" }, pranzo: { text: "Insalatona mista con: Lattuga, Rucola, Carote julienne, Ceci 100g, Petto di pollo grigliato a striscioline 100g, Semi misti 10g, Aceto balsamico, Olio EVO 1 cucchiaio", substitute: "" }, spuntinoPomeriggio: { text: "Mela cotta con cannella", substitute: "" }, cena: { text: "Orata al cartoccio 180g con pomodorini e olive\nFinocchi gratinati 200g\nPane integrale 30g\nOlio EVO 1 cucchiaio", substitute: "" } },
             "Domenica": { colazione: { text: "Brunch leggero: Uova strapazzate 2\nPane integrale tostato 40g\nAvocado 50g\nSpremuta d'arancia 150ml", substitute: "" }, spuntinoMattina: { text: "Frutta secca mista 20g", substitute: "" }, pranzo: { text: "Lasagna vegetariana leggera (con verdure e ricotta) porzione media\nInsalata verde", substitute: "" }, spuntinoPomeriggio: { text: "Macedonia di frutta fresca 150g", substitute: "" }, cena: { text: "**Sgarro:** Pizza (preferibilmente Margherita o con verdure)", substitute: "" } }
         };
-        
-        // --- INTEGRATORI ---
-        // Ora includono 'dosage'
+
+        // --- INTEGRATORI (Esempio - Compilare con dati reali) ---
         const supplements = [
-            { id: "diosmina", name: "Diosmina + Esperidina", dosage: "Es: 1 cpr mattina, 1 cpr sera", link: "https://..." }, // Sostituisci link
-            { id: "centella", name: "Centella Asiatica", dosage: "Es: 1 capsula al giorno", link: "https://..." }, // Sostituisci link
-            { id: "ippocastano", name: "Ippocastano", dosage: "Es: 1 capsula al mattino", link: "https://..." },
-            { id: "viteRossa", name: "Vite Rossa", dosage: "Es: 1 misurino in acqua", link: "https://..." },
-            { id: "magnesio", name: "Magnesio", dosage: "Es: 1 bustina la sera", link: "https://..." },
-            { id: "mirtillo", name: "Mirtillo", dosage: "Es: 1 opercolo al giorno", link: "https://..." }
+             { id: "diosmina", name: "Diosmina + Esperidina", dosage: "Es: 1 cpr mattina, 1 cpr sera", link: "https://..." },
+             { id: "centella", name: "Centella Asiatica", dosage: "Es: 1 capsula al giorno", link: "https://..." },
+             { id: "ippocastano", name: "Ippocastano", dosage: "Es: 1 capsula al mattino", link: "https://..." },
+             { id: "viteRossa", name: "Vite Rossa", dosage: "Es: 1 misurino in acqua", link: "https://..." },
+             { id: "magnesio", name: "Magnesio", dosage: "Es: 1 bustina la sera", link: "https://..." },
+             { id: "mirtillo", name: "Mirtillo", dosage: "Es: 1 opercolo al giorno", link: "https://..." }
         ];
 
-
-        let weeklyData = {}; // Dati INTERATTIVI (modifiche utente, check, note)
+        // --- Variabili di Stato ---
+        let weeklyData = {};
         let currentDay = daysOfWeek[0];
         let weeklyCost = "";
         let saveTimeout;
+        let statusTimeout;
 
         // --- Elementi DOM ---
         const daySelector = document.getElementById('daySelector');
@@ -519,41 +614,196 @@
         const exportButton = document.getElementById('exportButton');
         const manualSaveButton = document.getElementById('manualSaveButton');
         const referenceDietContent = document.getElementById('referenceDietContent');
-        const dailyPlanContainer = document.getElementById('dailyPlan'); // Contenitore per event delegation
+        const dailyPlanContainer = document.getElementById('dailyPlan');
 
-        // --- Funzioni ---
+        // --- FUNZIONI PRINCIPALI ---
 
         function initializeApp() {
-            loadData(); // Carica dati utente salvati (o inizializza se non presenti)
+            loadData();
             createDayButtons();
-            populateSupplements(); // Popola lista integratori interattiva
-            displayReferenceDiet(); // Mostra dieta di riferimento statica
-            selectDay(daysOfWeek[new Date().getDay() === 0 ? 6 : new Date().getDay() - 1] || daysOfWeek[0]); // Seleziona giorno corrente
+            populateSupplements();
+            displayReferenceDiet();
+            selectDay(daysOfWeek[new Date().getDay() === 0 ? 6 : new Date().getDay() - 1] || daysOfWeek[0]);
             addEventListeners();
-            console.log("App V2 Initialized.");
+            console.log("App V5 Initialized (Balanced Aesthetic).");
         }
+
+        function loadData() {
+            try {
+                const savedData = localStorage.getItem('venousReturnPlan_v5'); // v5 KEY
+                const savedCost = localStorage.getItem('venousReturnWeeklyCost_v5'); // v5 KEY
+
+                if (savedData) {
+                    weeklyData = JSON.parse(savedData);
+                    // Validazione/Merge Dati Caricati
+                    daysOfWeek.forEach(day => {
+                        if (!weeklyData[day]) {
+                             weeklyData[day] = {};
+                             console.warn(`Giorno ${day} non trovato nei dati salvati V5. Inizializzo.`);
+                        }
+                        mealTypes.forEach(meal => {
+                             if (!weeklyData[day][meal]) {
+                                 weeklyData[day][meal] = { text: '', completed: false };
+                             } else {
+                                 if(weeklyData[day][meal].completed === undefined) weeklyData[day][meal].completed = false;
+                                 if(weeklyData[day][meal].text === undefined) weeklyData[day][meal].text = '';
+                             }
+                        });
+                        if (weeklyData[day].notes === undefined) weeklyData[day].notes = "";
+                        if (weeklyData[day].supplements === undefined) weeklyData[day].supplements = {};
+                        supplements.forEach(sup => {
+                            if (weeklyData[day].supplements[sup.id] === undefined) {
+                                weeklyData[day].supplements[sup.id] = false;
+                            }
+                        });
+                    });
+                    console.log("Dati utente V5 caricati da localStorage.");
+                } else {
+                    // Nessun dato salvato: Inizializza struttura vuota
+                    weeklyData = {};
+                    daysOfWeek.forEach(day => {
+                        weeklyData[day] = { notes: "", supplements: {} };
+                        mealTypes.forEach(meal => { weeklyData[day][meal] = { text: "", completed: false }; });
+                        supplements.forEach(sup => { weeklyData[day].supplements[sup.id] = false; });
+                    });
+                    console.log("Nessun dato V5 salvato. Inizializzazione struttura vuota.");
+                }
+                // Carica costo settimanale (assicurati sia stringa)
+                weeklyCost = savedCost ? JSON.parse(savedCost) : "";
+                weeklyCostInput.value = weeklyCost;
+
+            } catch (e) {
+                console.error("Errore caricamento dati V5:", e);
+                showSaveStatus("Errore caricamento dati! Potrebbero essere corrotti.", 'error');
+                // Reset a struttura vuota in caso di errore
+                weeklyData = {};
+                daysOfWeek.forEach(day => {
+                     weeklyData[day] = { notes: "", supplements: {} };
+                      mealTypes.forEach(meal => { weeklyData[day][meal] = { text: "", completed: false }; });
+                      supplements.forEach(sup => { weeklyData[day].supplements[sup.id] = false; });
+                 });
+                weeklyCost = "";
+                weeklyCostInput.value = "";
+                // alert("Attenzione: errore caricamento dati salvati V5...");
+            }
+        }
+
+         function saveData(isManual = false) {
+             clearTimeout(saveTimeout);
+             try {
+                 updateDataFromUI(currentDay); // Assicura che i dati UI siano aggiornati nell'oggetto
+                 localStorage.setItem('venousReturnPlan_v5', JSON.stringify(weeklyData)); // v5 KEY
+                 localStorage.setItem('venousReturnWeeklyCost_v5', JSON.stringify(weeklyCost)); // v5 KEY
+
+                 showSaveStatus(`Dati salvati ${isManual ? 'manualmente' : ''}`, 'success');
+                 console.log(`Data V5 ${isManual ? 'manually' : 'automatically'} saved.`);
+
+             } catch (e) {
+                 console.error("Errore salvataggio dati V5:", e);
+                 showSaveStatus("Errore nel salvataggio!", 'error');
+                 if (e.name === 'QuotaExceededError') {
+                      alert('Errore: Spazio di archiviazione locale pieno. Non è possibile salvare ulteriori dati. Prova a esportare i dati e pulire la memoria del sito.');
+                 }
+             }
+         }
+
+         function showSaveStatus(message, type = 'info') {
+            clearTimeout(statusTimeout);
+            saveStatus.textContent = message;
+            saveStatus.className = 'save-status visible'; // Rende visibile e resetta classi tipo
+            if (type === 'success') saveStatus.classList.add('success');
+            if (type === 'error') saveStatus.classList.add('error');
+
+            statusTimeout = setTimeout(() => {
+                 saveStatus.classList.remove('visible');
+                 setTimeout(() => { saveStatus.textContent = ''; }, 300); // Ritarda pulizia testo
+            }, 3000);
+         }
+
+        function debouncedSave() {
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(() => saveData(false), 1200); // Salva dopo 1.2 sec di inattività
+        }
+
+        function forceSave() { saveData(true); } // Salva immediatamente su click
+
+        function createDayButtons() {
+            daySelector.innerHTML = ''; // Pulisci prima di aggiungere
+            daysOfWeek.forEach(day => {
+                const button = document.createElement('button');
+                button.textContent = day;
+                button.classList.add('day-btn');
+                button.dataset.day = day;
+                // L'event listener verrà aggiunto tramite delegation in addEventListeners
+                daySelector.appendChild(button);
+            });
+        }
+
+        function populateSupplements() {
+             supplementList.innerHTML = ''; // Pulisci prima
+             supplements.forEach(sup => {
+                 const li = document.createElement('li');
+
+                 const supInfoDiv = document.createElement('div');
+                 supInfoDiv.classList.add('sup-info');
+
+                 const checkbox = document.createElement('input');
+                 checkbox.type = 'checkbox';
+                 checkbox.id = `sup-${sup.id}`;
+                 checkbox.dataset.supplementId = sup.id;
+                 checkbox.title = `Segna ${sup.name} come preso`;
+
+                 const label = document.createElement('label');
+                 label.htmlFor = `sup-${sup.id}`;
+                 label.textContent = sup.name;
+
+                 const dosageSpan = document.createElement('span');
+                 dosageSpan.classList.add('supplement-dosage');
+                 dosageSpan.textContent = `(${sup.dosage || 'Dosaggio non specificato'})`;
+
+                 supInfoDiv.appendChild(checkbox);
+                 supInfoDiv.appendChild(label);
+                 supInfoDiv.appendChild(dosageSpan);
+                 li.appendChild(supInfoDiv);
+
+                 if (sup.link && sup.link !== 'https://...') {
+                     const link = document.createElement('a');
+                     link.href = sup.link;
+                     link.target = '_blank';
+                     link.classList.add('supplement-link');
+                     link.innerHTML = `<i class="fa-solid fa-arrow-up-right-from-square"></i> Link`; // Icona link esterno
+                     li.appendChild(link);
+                 }
+                 supplementList.appendChild(li);
+             });
+         }
 
         function displayReferenceDiet() {
              referenceDietContent.innerHTML = ''; // Pulisci
              daysOfWeek.forEach(day => {
                  const dayDiv = document.createElement('div');
                  dayDiv.classList.add('reference-day');
-                 
+
                  const dayTitle = document.createElement('h4');
-                 dayTitle.textContent = day;
+                 dayTitle.innerHTML = `<i class="fa-regular fa-calendar-days"></i> ${day}`;
                  dayDiv.appendChild(dayTitle);
 
                  const dayPlan = defaultWeeklyPlan[day];
+                 if (!dayPlan) return; // Salta se non ci sono dati per il giorno
+
                  mealTypes.forEach(mealKey => {
                      const mealData = dayPlan[mealKey];
-                     if (mealData && mealData.text) { // Mostra solo se c'è un testo per il pasto
+                     if (mealData && mealData.text) {
                           const mealDiv = document.createElement('div');
                           mealDiv.classList.add('reference-meal');
-                          
+
                           const mealTitle = document.createElement('strong');
-                          mealTitle.textContent = mealNames[mealKey] + ":";
+                           // Trova l'icona corrispondente dal tracking section per coerenza
+                           const iconElement = document.querySelector(`#${mealKey}Section .meal-header h4 .fa-solid`);
+                           const iconHTML = iconElement ? iconElement.outerHTML : '<i class="fa-solid fa-circle-question"></i>'; // Icona di fallback
+                          mealTitle.innerHTML = `${iconHTML} ${mealNames[mealKey]}:`;
                           mealDiv.appendChild(mealTitle);
-                          
+
                           const mealText = document.createElement('p');
                           mealText.textContent = mealData.text;
                           mealDiv.appendChild(mealText);
@@ -567,231 +817,40 @@
                           dayDiv.appendChild(mealDiv);
                      }
                  });
-                 referenceDietContent.appendChild(dayDiv);
+                 referenceDietContent.appendChild(dayDiv); // Aggiunge il div del giorno al contenitore
              });
         }
-        
-        function populateSupplements() {
-             supplementList.innerHTML = ''; // Pulisci lista
-             supplements.forEach(sup => {
-                 const li = document.createElement('li');
-                 
-                 const supInfoDiv = document.createElement('div');
-                 supInfoDiv.classList.add('sup-info');
 
-                 const checkbox = document.createElement('input');
-                 checkbox.type = 'checkbox';
-                 checkbox.id = `sup-${sup.id}`;
-                 checkbox.dataset.supplementId = sup.id;
-                 // NO event listener qui, lo mettiamo globale con delegation
-                 
-                 const label = document.createElement('label');
-                 label.htmlFor = `sup-${sup.id}`;
-                 label.textContent = sup.name;
-                 
-                 const dosageSpan = document.createElement('span');
-                 dosageSpan.classList.add('supplement-dosage');
-                 dosageSpan.textContent = `(${sup.dosage || 'Dosaggio non specificato'})`; // Mostra dosaggio
-
-                 supInfoDiv.appendChild(checkbox);
-                 supInfoDiv.appendChild(label);
-                 supInfoDiv.appendChild(dosageSpan);
-                 
-                 li.appendChild(supInfoDiv);
-
-                 if (sup.link && sup.link !== 'https://...') {
-                     const link = document.createElement('a');
-                     link.href = sup.link;
-                     link.textContent = 'Link Acquisto';
-                     link.target = '_blank'; 
-                     link.classList.add('supplement-link');
-                     li.appendChild(link);
-                 }
-                 
-                 supplementList.appendChild(li);
-             });
-         }
-
-        function loadData() {
-            let loadedSuccessfully = false;
-            try {
-                const savedData = localStorage.getItem('venousReturnPlan_v2'); // Uso una chiave diversa per V2
-                const savedCost = localStorage.getItem('venousReturnWeeklyCost_v2');
-                
-                if (savedData) {
-                    weeklyData = JSON.parse(savedData);
-                    // **Validazione/Merge Dati Caricati:**
-                    // Assicura che tutti i giorni/pasti esistano nella struttura caricata,
-                    // altrimenti li prende dal default. Mantiene i dati utente se presenti.
-                    daysOfWeek.forEach(day => {
-                        if (!weeklyData[day]) {
-                             weeklyData[day] = {}; // Crea giorno se non esiste
-                             console.warn(`Giorno ${day} non trovato nei dati salvati. Inizializzo.`);
-                        }
-                        // Completa pasti mancanti e aggiunge 'completed' se non presente
-                        mealTypes.forEach(meal => {
-                             if (!weeklyData[day][meal]) {
-                                 // Se il pasto manca del tutto nei dati salvati, NON lo inizializzo qui
-                                 // Lo lascio vuoto, l'utente lo riempirà se serve.
-                                 // Inizializzo solo se esiste ma manca 'completed'.
-                                 if(weeklyData[day][meal] && weeklyData[day][meal].completed === undefined) {
-                                      weeklyData[day][meal].completed = false;
-                                 }
-                             } else if (weeklyData[day][meal].completed === undefined) {
-                                 weeklyData[day][meal].completed = false; // Assicura che 'completed' esista
-                             }
-                             // Inizializzo la proprietà text se manca, ma solo se il pasto esiste
-                             if(weeklyData[day][meal] && weeklyData[day][meal].text === undefined) {
-                                 weeklyData[day][meal].text = '';
-                             }
-                        });
-                         // Inizializza note e supplementi se mancano
-                        if (weeklyData[day].notes === undefined) weeklyData[day].notes = "";
-                        if (weeklyData[day].supplements === undefined) weeklyData[day].supplements = {};
-                        
-                        // Assicura che tutti i supplementi definiti ESISTANO nell'oggetto del giorno
-                        supplements.forEach(sup => {
-                            if (weeklyData[day].supplements[sup.id] === undefined) {
-                                weeklyData[day].supplements[sup.id] = false; // Inizializza a non preso
-                            }
-                        });
-                    });
-                    loadedSuccessfully = true;
-                    console.log("Dati utente caricati da localStorage.");
-
-                } else {
-                    // Nessun dato salvato: Inizializza 'weeklyData' vuoto.
-                    // I campi verranno popolati al primo salvataggio o quando l'utente interagisce.
-                     weeklyData = {};
-                     daysOfWeek.forEach(day => {
-                        weeklyData[day] = { notes: "", supplements: {} };
-                        mealTypes.forEach(meal => {
-                             // Non mettiamo il testo di default qui, l'utente lo inserirà
-                             weeklyData[day][meal] = { text: "", completed: false }; 
-                        });
-                        supplements.forEach(sup => {
-                             weeklyData[day].supplements[sup.id] = false;
-                        });
-                     });
-                    console.log("Nessun dato salvato trovato. Inizializzazione struttura vuota.");
-                }
-
-                 // Carica costo settimanale
-                weeklyCost = savedCost || ""; // Usa stringa vuota se non trovato
-                weeklyCostInput.value = weeklyCost;
-
-            } catch (e) {
-                console.error("Errore durante il caricamento dei dati:", e);
-                saveStatus.textContent = "Errore nel caricamento dei dati! Potrebbero essere corrotti.";
-                saveStatus.classList.add('error');
-                // Reset a struttura vuota in caso di errore di parsing
-                 weeklyData = {};
-                 daysOfWeek.forEach(day => {
-                     weeklyData[day] = { notes: "", supplements: {} };
-                      mealTypes.forEach(meal => {
-                         weeklyData[day][meal] = { text: "", completed: false }; 
-                      });
-                      supplements.forEach(sup => {
-                         weeklyData[day].supplements[sup.id] = false;
-                      });
-                 });
-                weeklyCost = "";
-                weeklyCostInput.value = "";
-                 alert("Attenzione: si è verificato un errore nel caricamento dei tuoi dati salvati. Potrebbero essere stati persi o corrotti. Verrà utilizzato un piano vuoto.");
-            }
-        }
-
-        function saveData(isManual = false) {
-            clearTimeout(saveTimeout); // Annulla eventuali salvataggi automatici in attesa
-            try {
-                // 1. Assicurati che i dati dall'UI siano nell'oggetto 'weeklyData'
-                updateDataFromUI(currentDay); 
-                
-                // 2. Salva su localStorage
-                localStorage.setItem('venousReturnPlan_v2', JSON.stringify(weeklyData));
-                localStorage.setItem('venousReturnWeeklyCost_v2', weeklyCost);
-                
-                // 3. Feedback utente
-                saveStatus.textContent = `Dati salvati ${isManual ? 'manualmente' : 'automaticamente'} (${new Date().toLocaleTimeString()})`;
-                saveStatus.classList.remove('error');
-                console.log(`Data ${isManual ? 'manually' : 'automatically'} saved at ${new Date().toLocaleTimeString()}`);
-                 
-                 // Pulisci il messaggio dopo un po' (solo per salvataggio automatico)
-                 if (!isManual) {
-                     setTimeout(() => {
-                         // Controlla se nel frattempo non è apparso un altro messaggio
-                         if (saveStatus.textContent.includes('automaticamente')) {
-                              saveStatus.textContent = "";
-                         }
-                     }, 3000);
-                 }
-
-            } catch (e) {
-                console.error("Errore durante il salvataggio dei dati:", e);
-                saveStatus.textContent = "Errore nel salvataggio! Spazio esaurito o dati corrotti?";
-                saveStatus.classList.add('error');
-                 if (e.name === 'QuotaExceededError') {
-                      alert('Errore: Spazio di archiviazione locale pieno. Non è possibile salvare ulteriori dati. Prova a esportare i dati e pulire la memoria del sito.');
-                 }
-            }
-        }
-        
-        // Funzione debounce per salvare automaticamente dopo un tot di inattività
-        function debouncedSave() {
-            clearTimeout(saveTimeout);
-            saveStatus.textContent = "Salvataggio in corso..."; // Feedback immediato
-            saveStatus.classList.remove('error');
-            saveTimeout = setTimeout(() => saveData(false), 1500); // Salva dopo 1.5 secondi di inattività
-        }
-        
-        // Salva immediatamente (usato dal bottone "Salva Ora")
-        function forceSave() {
-             saveData(true); // Passa true per indicare salvataggio manuale
-        }
-
-        function createDayButtons() { /* Come prima */
-            daySelector.innerHTML = ''; 
-            daysOfWeek.forEach(day => {
-                const button = document.createElement('button');
-                button.textContent = day.substring(0, 3); // Abbreviazione per più spazio? O lascia completo?
-                button.classList.add('day-btn');
-                button.dataset.day = day;
-                // NO event listener qui, usiamo delegation
-                daySelector.appendChild(button);
-            });
-        }
-        
         function selectDay(day) {
             // 1. Salva i dati del giorno *precedente* prima di cambiare
-            // Nota: updateDataFromUI ora legge dall'UI e aggiorna l'oggetto JS.
-            // Il salvataggio effettivo su localStorage avviene con debouncedSave o forceSave.
-            updateDataFromUI(currentDay); 
+            updateDataFromUI(currentDay);
 
             // 2. Aggiorna currentDay
             currentDay = day;
 
             // 3. Aggiorna UI per il nuovo giorno
-            currentDayTitle.textContent = `Piano per ${day}`;
-            
-            // Aggiorna stile bottoni
-             document.querySelectorAll('.day-btn').forEach(btn => {
+            const titleIcon = currentDayTitle.querySelector('.fa-regular');
+            if (titleIcon) titleIcon.className = 'fa-regular fa-calendar'; // Assicura icona base
+            currentDayTitle.innerHTML = `<i class="fa-regular fa-calendar"></i> Piano per ${day}`;
+
+            // Aggiorna stile bottoni giorni
+            document.querySelectorAll('.day-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.day === day);
             });
 
-            // Popola i campi INTERATTIVI con i dati utente (o vuoti se non inseriti)
+            // Popola i campi INTERATTIVI con i dati utente
             mealTypes.forEach(meal => {
                 const textarea = document.getElementById(`${meal}Text`);
                 const checkbox = document.getElementById(`${meal}Check`);
                 const section = document.getElementById(`${meal}Section`);
-                
-                // Usa l'operatore optional chaining (?) per sicurezza
-                textarea.value = weeklyData[day]?.[meal]?.text || ''; 
-                checkbox.checked = weeklyData[day]?.[meal]?.completed || false;
-                section.classList.toggle('checked', checkbox.checked);
+
+                if(textarea) textarea.value = weeklyData[day]?.[meal]?.text || '';
+                if(checkbox) checkbox.checked = weeklyData[day]?.[meal]?.completed || false;
+                if(section) section.classList.toggle('checked', checkbox?.checked || false);
             });
 
             // Popola le note
-            dailyNotes.value = weeklyData[day]?.notes || '';
+            if(dailyNotes) dailyNotes.value = weeklyData[day]?.notes || '';
 
             // Popola stato integratori
             supplements.forEach(sup => {
@@ -800,11 +859,9 @@
                     checkbox.checked = weeklyData[day]?.supplements?.[sup.id] || false;
                  }
             });
-            
-             // Pulisci lo stato di salvataggio quando cambi giorno
-             saveStatus.textContent = "";
-             saveStatus.classList.remove('error');
-             console.log(`Visualizzazione aggiornata per: ${day}`);
+
+            // Non pulire saveStatus qui, ci pensa showSaveStatus con il timeout
+            console.log(`Visualizzazione aggiornata per: ${day}`);
         }
 
          function updateDataFromUI(dayToUpdate) {
@@ -813,70 +870,53 @@
                    weeklyData[dayToUpdate] = { notes: "", supplements: {} };
                    mealTypes.forEach(meal => { weeklyData[dayToUpdate][meal] = { text: "", completed: false }; });
                    supplements.forEach(sup => { weeklyData[dayToUpdate].supplements[sup.id] = false; });
-                   console.warn(`Struttura dati inizializzata per ${dayToUpdate} durante l'aggiornamento.`);
+                   console.warn(`Struttura dati V5 inizializzata per ${dayToUpdate} durante l'aggiornamento.`);
                }
-              
+
              // Aggiorna pasti dall'UI
              mealTypes.forEach(meal => {
                 const textarea = document.getElementById(`${meal}Text`);
                 const checkbox = document.getElementById(`${meal}Check`);
-                 // Assicura che l'oggetto pasto esista prima di scriverci
-                 if (!weeklyData[dayToUpdate][meal]) {
-                      weeklyData[dayToUpdate][meal] = { text: '', completed: false };
-                 }
-                weeklyData[dayToUpdate][meal].text = textarea.value;
-                weeklyData[dayToUpdate][meal].completed = checkbox.checked;
+                 if (!weeklyData[dayToUpdate][meal]) { weeklyData[dayToUpdate][meal] = { text: '', completed: false }; }
+                if(textarea) weeklyData[dayToUpdate][meal].text = textarea.value;
+                if(checkbox) weeklyData[dayToUpdate][meal].completed = checkbox.checked;
              });
-             
+
              // Aggiorna note
-            weeklyData[dayToUpdate].notes = dailyNotes.value;
-            
+            if(dailyNotes) weeklyData[dayToUpdate].notes = dailyNotes.value;
+
              // Aggiorna integratori
-             // Assicura che l'oggetto supplements esista
-             if (!weeklyData[dayToUpdate].supplements) {
-                 weeklyData[dayToUpdate].supplements = {};
-             }
+             if (!weeklyData[dayToUpdate].supplements) weeklyData[dayToUpdate].supplements = {};
              supplements.forEach(sup => {
                 const checkbox = document.getElementById(`sup-${sup.id}`);
-                 if (checkbox) { 
-                    weeklyData[dayToUpdate].supplements[sup.id] = checkbox.checked;
-                 } else {
-                     // Se la checkbox non esiste (errore?), inizializza comunque a false
-                     if (weeklyData[dayToUpdate].supplements[sup.id] === undefined) {
-                         weeklyData[dayToUpdate].supplements[sup.id] = false;
-                     }
-                 }
+                 if (checkbox) weeklyData[dayToUpdate].supplements[sup.id] = checkbox.checked;
+                 else if (weeklyData[dayToUpdate].supplements[sup.id] === undefined) weeklyData[dayToUpdate].supplements[sup.id] = false;
              });
-             
+
              // Aggiorna costo settimanale (letto direttamente dall'input)
-             weeklyCost = weeklyCostInput.value;
-             
-             // Questa funzione aggiorna solo l'oggetto JS 'weeklyData'.
-             // Il salvataggio effettivo in localStorage è separato.
-             // console.log(`Dati UI letti e aggiornati in memoria per ${dayToUpdate}.`);
+             if(weeklyCostInput) weeklyCost = weeklyCostInput.value;
+
+             // console.log(`Dati UI V5 letti e aggiornati in memoria per ${dayToUpdate}.`);
         }
-        
-        // --- Gestione Eventi con Delegation ---
+
         function addEventListeners() {
-             // Listener per i bottoni dei giorni
+             // Listener per i bottoni dei giorni (Delegation)
              daySelector.addEventListener('click', function(event) {
                  if (event.target.classList.contains('day-btn')) {
                      selectDay(event.target.dataset.day);
                  }
              });
 
-             // Listener per input/change nel contenitore del piano giornaliero
+             // Listener per input/change nel contenitore del piano giornaliero (Delegation)
              dailyPlanContainer.addEventListener('input', function(event) {
                  const target = event.target;
                  // Textarea dei pasti o note
                  if (target.tagName === 'TEXTAREA' && (target.dataset.meal || target.id === 'dailyNotes')) {
-                    updateDataFromUI(currentDay); // Aggiorna subito in memoria
-                    debouncedSave(); // Pianifica salvataggio
+                    updateDataFromUI(currentDay); debouncedSave();
                  }
                  // Campo costo
                  if (target.id === 'weeklyCost') {
-                     updateDataFromUI(currentDay); // Aggiorna costo in memoria
-                     debouncedSave(); // Pianifica salvataggio
+                     updateDataFromUI(currentDay); debouncedSave();
                  }
              });
 
@@ -886,93 +926,91 @@
                   if (target.type === 'checkbox' && target.dataset.meal) {
                      const mealType = target.dataset.meal;
                      const section = document.getElementById(`${mealType}Section`);
-                     section.classList.toggle('checked', target.checked);
-                     updateDataFromUI(currentDay); // Aggiorna in memoria
-                     debouncedSave(); // Pianifica salvataggio
+                     if (section) section.classList.toggle('checked', target.checked);
+                     updateDataFromUI(currentDay); debouncedSave();
                   }
                   // Checkbox integratori
                   if (target.type === 'checkbox' && target.dataset.supplementId) {
-                     updateDataFromUI(currentDay); // Aggiorna in memoria
-                     debouncedSave(); // Pianifica salvataggio
+                     updateDataFromUI(currentDay); debouncedSave();
                   }
              });
-            
+
             // Listener per il bottone Salva Ora
             manualSaveButton.addEventListener('click', forceSave);
-            
+
             // Listener per il bottone di esportazione
             exportButton.addEventListener('click', exportDataToCSV);
         }
-        
-         // --- Funzione Esportazione CSV (invariata logicamente, ma ricontrollata) ---
+
          function exportDataToCSV() {
              updateDataFromUI(currentDay); // Assicura che gli ultimi dati UI siano nell'oggetto
-              
+
               let csvContent = "data:text/csv;charset=utf-8,";
+              // Header CSV
               const headers = ["Giorno", "Pasto", "Descrizione_Consumato", "Completato", "Note_Giornaliere", "Integratori_Presi", "Costo_Settimanale_EUR"];
               csvContent += headers.join(",") + "\r\n";
 
+              // Itera sui dati settimanali
               daysOfWeek.forEach(day => {
                   const dayData = weeklyData[day];
-                  if (!dayData) return; 
+                  if (!dayData) return; // Salta se un giorno non ha dati
 
-                   const dailyNotesFormatted = `"${(dayData.notes || "").replace(/"/g, '""')}"`; 
+                   // Formatta note e integratori per il CSV (gestendo virgolette e valori nulli)
+                   const dailyNotesFormatted = `"${(dayData.notes || "").replace(/"/g, '""')}"`;
                    const supplementsTaken = supplements
                        .filter(sup => dayData.supplements?.[sup.id])
                        .map(sup => sup.name)
-                       .join("; "); 
-                   const supplementsFormatted = `"${supplementsTaken}"`;
-                   
-                   let isFirstRowOfDay = true; // Flag per scrivere note/costo solo sulla prima riga del giorno
+                       .join("; "); // Lista separata da ;
+                   const supplementsFormatted = `"${supplementsTaken.replace(/"/g, '""')}"`;
 
+                   let isFirstRowOfDay = true; // Flag per scrivere dati giornalieri solo una volta
+
+                   // Aggiungi righe per ogni pasto del giorno
                    mealTypes.forEach(meal => {
                        const mealData = dayData[meal];
-                       // Esporta solo se c'è testo o se è stato checkato (anche se vuoto)
-                       if (mealData && (mealData.text || mealData.completed)) { 
-                           const descriptionFormatted = `"${(mealData.text || "").replace(/"/g, '""')}"`; 
+                       // Esporta riga solo se c'è testo nel pasto o se è stato checkato
+                       if (mealData && (mealData.text || mealData.completed)) {
+                           const descriptionFormatted = `"${(mealData.text || "").replace(/"/g, '""')}"`;
                            const completedStatus = mealData.completed ? "Sì" : "No";
-                           
+
+                           // Aggiungi note, integratori e costo solo alla prima riga valida del giorno
                            const notesForThisRow = isFirstRowOfDay ? dailyNotesFormatted : '""';
                            const supplementsForThisRow = isFirstRowOfDay ? supplementsFormatted : '""';
-                           // Scrivi costo solo il Lunedì sulla prima riga scritta per quel giorno
-                           const costForThisRow = (day === daysOfWeek[0] && isFirstRowOfDay) ? `"${weeklyCost}"` : '""'; 
+                           const costForThisRow = (day === daysOfWeek[0] && isFirstRowOfDay) ? `"${weeklyCost}"` : '""';
 
                            const row = [day, mealNames[meal], descriptionFormatted, completedStatus, notesForThisRow, supplementsForThisRow, costForThisRow];
                            csvContent += row.join(",") + "\r\n";
-                           isFirstRowOfDay = false; // Le righe successive del giorno non avranno note/costo
+                           isFirstRowOfDay = false; // Le righe successive non avranno questi dati generali
                        }
                    });
-                   
-                   // Se non ci sono pasti per il giorno, ma ci sono note o integratori, aggiungi una riga
+
+                   // Se non ci sono pasti registrati per il giorno, ma ci sono note o integratori, aggiungi una riga riassuntiva
                    if (isFirstRowOfDay && (dayData.notes || supplementsTaken)) {
                          const notesForThisRow = dailyNotesFormatted;
                          const supplementsForThisRow = supplementsFormatted;
-                         const costForThisRow = (day === daysOfWeek[0]) ? `"${weeklyCost}"` : '""'; 
+                         const costForThisRow = (day === daysOfWeek[0]) ? `"${weeklyCost}"` : '""';
                          const row = [day, "N/A", '""', "N/A", notesForThisRow, supplementsForThisRow, costForThisRow];
                          csvContent += row.join(",") + "\r\n";
                    }
               });
 
+              // Crea e clicca il link per il download
               const encodedUri = encodeURI(csvContent);
               const link = document.createElement("a");
               link.setAttribute("href", encodedUri);
-              const timestamp = new Date().toISOString().slice(0, 10); 
-              link.setAttribute("download", `piano_venoso_utente_${timestamp}.csv`);
-              document.body.appendChild(link); 
+              const timestamp = new Date().toISOString().slice(0, 10); // Formato YYYY-MM-DD
+              link.setAttribute("download", `piano_benessere_${timestamp}_v5.csv`); // Nome file V5
+              document.body.appendChild(link); // Required for Firefox
               link.click();
-              document.body.removeChild(link);
-              
-              saveStatus.textContent = "Dati esportati in CSV.";
-              saveStatus.classList.remove('error');
-              setTimeout(() => { saveStatus.textContent = ""; }, 4000);
+              document.body.removeChild(link); // Pulisce il DOM
+
+              showSaveStatus("Dati esportati in CSV.", 'success');
          }
 
         // --- Inizializzazione ---
         document.addEventListener('DOMContentLoaded', initializeApp);
 
     </script>
-    <!-- Eventualmente aggiungi qui link a FontAwesome se vuoi usare le icone per i pasti (già nel CSS ma serve il link) -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> -->
 
 </body>
 </html>
